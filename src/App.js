@@ -8,7 +8,7 @@ import {
 import Home from "./pages/home/Home";
 import Topbar from "./components/topbar/Topbar";
 import SideBar from "./components/sidebar/Sidebar";
-//import Product from "./pages/product/Product";
+import OrderDetail from "./pages/orderDetail/OrderDetail";
 import ProductList from "./pages/productList/ProductList";
 import AddProduct from "./pages/addProduct/AddProduct";
 import EditProduct from "./pages/editProduct/EditProduct";
@@ -54,6 +54,7 @@ function App() {
           <Route path="/orders" element={<Orders />} />
           <Route path="/add-blog" element={<AddBlog />} />
           <Route path="/user-detail" element={<User />} />
+          <Route path="/order-detail/:orderId" element={<OrderDetail/>}/>
           {/* <Route path="/signup" exact element={<SignUp />} />
           <Route path="/login" exact element={<Login />} />
           <Route path="/" element={<Navigate replace to="/login" />} /> */}
