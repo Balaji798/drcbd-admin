@@ -70,7 +70,7 @@ const OrderDetail = () => {
           {orderData?.orderTime.split("T")[1].split("Z")[0]}
         </h3>
       </div>
-      <div>
+      <div style={{padding: "1rem",}}>
         <h3>User Name:- {orderData?.userId?.fullName}</h3>
         <h2 style={{ padding: "1rem 0" }}> Contact Detail :-</h2>
         <h3>Email:- {orderData?.userId?.email}</h3>
