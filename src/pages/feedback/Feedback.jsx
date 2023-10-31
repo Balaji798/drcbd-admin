@@ -1,23 +1,43 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
+import { MdDelete } from "react-icons/md";
 import { CustomPagination, StyledDataGrid } from "../../data/StyledDataGrid ";
 import axios from "axios";
 
 const Feedback = () => {
-  const [reviews,setReviews] =useState([]);
-  useEffect(()=>{
-    const getReviews =async()=>{
-      const res = await axios.get('https://drcbd-backend.onrender.com/review/get-reviews');
+  const [reviews, setReviews] = useState([]);
+  useEffect(() => {
+    const getReviews = async () => {
+      const res = await axios.get(
+        "https://drcbd-backend.onrender.com/review/get-reviews"
+      );
       console.log(res.data);
-      setReviews(res.data)
-    }
+      setReviews(res.data);
+    };
 
     getReviews();
-  },[])
+  }, []);
   const columns = [
     { field: "id", headerName: "No.", width: 90 },
-    {field:"userName",headerName:"User Name",width:200},
-    {field:"rating",headerName:"Rating",width:100},
-    {field:"review",headerName:"Message",width:500},
+    { field: "userName", headerName: "User Name", width: 200 },
+    { field: "rating", headerName: "Rating", width: 100 },
+    { field: "review", headerName: "Message", width: 500 },
+    {
+      field: "action",
+      headerName: "Action",
+      renderCell: (params) => {
+        return (
+          <MdDelete
+            size={25}
+            onClick={async () => {
+              const res = await axios.delete(
+                `https://drcbd-backend.onrender.com/review/reviewDelete/${params.row._id}`
+              );
+              setReviews(res.data)
+            }}
+          />
+        );
+      },
+    },
   ];
   const rows = reviews.map((row, index) => ({
     ...row,

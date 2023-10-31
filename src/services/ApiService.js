@@ -11,5 +11,7 @@ export default {
   getFeedback(){
     return Api().post('/review/get-reviews')
   },
-  
+  changeStatus(status,orderId){
+    return Api().post(`orders/update_order/${orderId}`,{status:status})
+  }
 };

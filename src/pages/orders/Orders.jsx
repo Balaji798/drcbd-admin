@@ -9,7 +9,6 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 
 const Orders = () => {
-
   function getDefaultDate() {
     const currentDate = new Date();
     const day = String(currentDate.getDate()).padStart(2, "0");
@@ -17,6 +16,7 @@ const Orders = () => {
     const year = currentDate.getFullYear();
     return `${year}-${month}-${day}`;
   }
+  const [totalOrders, setOrders] = useState([]);
   const [data, setData] = useState([]);
   const [date, setDate] = useState({
     from: getDefaultDate(),
@@ -29,13 +29,14 @@ const Orders = () => {
         "https://drcbd-backend.onrender.com/orders/get_all_orders"
       );
       setData(res.data);
+      setOrders(res.data);
     };
     getOrders();
   }, []);
 
   const filter = () => {
-    const filteredData = data.filter((item) => {
-      const itemDate = new Date(item.date);
+    const filteredData = totalOrders.filter((item) => {
+      const itemDate = new Date(item.createdAt);
       return itemDate >= new Date(date.from) && itemDate <= new Date(date.to);
     });
     setData(filteredData);
@@ -117,31 +118,30 @@ const Orders = () => {
     id: index + 1,
   }));
 
-
-  const downloadCSV=()=> {
+  const downloadCSV = () => {
     const csv = Papa.unparse(data);
-    const blob = new Blob([csv], { type: 'text/csv' });
+    const blob = new Blob([csv], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
-  
+
     // Create a temporary anchor element to initiate the download
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
-    a.download = 'data.csv';
+    a.download = "data.csv";
     document.body.appendChild(a);
     a.click();
-  
+
     // Clean up by removing the temporary anchor
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-  }
+  };
   return (
     <>
       <div className="home">
         <Chart
-          data={userData}
+          data={data}
           title="Orders Analytics"
           grid
-          dataKey="Active User"
+          dataKey="Orders"
         />
       </div>
       <div

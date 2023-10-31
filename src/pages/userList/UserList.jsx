@@ -78,7 +78,7 @@ export default function UserList() {
     <>
       <div className="home">
         <Chart
-          data={userData}
+          data={data}
           title="User Analytics"
           grid
           dataKey="Active User"

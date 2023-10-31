@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React from "react";
 import "./chart.css";
 import {
@@ -9,45 +9,55 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 
-const Chart=({ title, data, dataKey, grid }) =>{
-  const [windowWidth, setWindowWidth] = useState(0);
+const Chart = ({ title, data, dataKey, grid }) => {
 
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    // Add event listener for window resize
-    window.addEventListener('resize', handleResize);
-
-    // Initialize window width on component mount
-    setWindowWidth(window.innerWidth);
-
-    // Clean up the event listener on component unmount
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
+  const mon = [
+    "",
+    "jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const currentMonth = new Date().getMonth() + 1;
+  const userData = [];
+  for (let i = 0; i <= currentMonth; i++) {
+    let month = new Date(`${new Date().getFullYear()}-01-01`).getMonth() + i;
+    let monthData = data.filter(
+      (item) => 
+      item?.createdAt[6] === month.toString()
+    );
+    userData.push({
+      name: mon[i],
+      [dataKey]: monthData.length,
+    });
+  }
+  console.log(userData)
   return (
     <div className="chart">
       <h3 className="chartTitle">{title}</h3>
-      {/* <ResponsiveContainer width="100%" aspect={4 / 1}> */}
-        <LineChart width={windowWidth-350} height={200} data={data}>
-          <XAxis dataKey="name" stroke="#5550bd" />
+      <ResponsiveContainer width="100%" paddingTop="1rem" aspect={4 / 1}>
+        <LineChart data={userData}>
+          <XAxis dataKey="name" stroke="#8884d8" />
           <Line type="monotone" dataKey={dataKey} stroke="#5550bd" />
           <Tooltip />
           {grid && <CartesianGrid stroke="#e0dfdf" strokeDasharray="5 5" />}
         </LineChart>
-      {/* </ResponsiveContainer> */}
+      </ResponsiveContainer>
     </div>
   );
-}
+};
 
-
-export default Chart
+export default Chart;
 // 'use client'
 // import React, { useState } from "react";
 // import {

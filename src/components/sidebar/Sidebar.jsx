@@ -38,11 +38,11 @@ const Sidebar = () => {
       //icon: <Storefront className="sidebarIcon" />,
       link: "/products",
     },
-    {
-      title: "Transaction",
-      //icon: <Timeline className="sidebarIcon" />,
-      link: "/transaction",
-    },
+    // {
+    //   title: "Transaction",
+    //   //icon: <Timeline className="sidebarIcon" />,
+    //   link: "/transaction",
+    // },
     {
       title:"CBD University",
       link:"/cbd-university"
