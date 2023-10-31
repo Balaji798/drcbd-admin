@@ -23,7 +23,7 @@ const OrderDetail = () => {
   const changeOrderStatus = async () => {
     try {
       const res = await axios.post(
-        `http://localhost:8080/orders/update_order_by_admin/${orderId}`,
+        `https://drcbd-backend.onrender.com/orders/update_order_by_admin/${orderId}`,
         { status: orderStatus }
       );
     } catch (err) {
