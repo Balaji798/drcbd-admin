@@ -186,6 +186,7 @@ const OrderDetail = () => {
           />
           Order Cancelled
         </div>
+
       </div>
         <button
           className="button"
