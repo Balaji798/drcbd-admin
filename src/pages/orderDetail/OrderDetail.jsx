@@ -15,7 +15,7 @@ const OrderDetail = () => {
       );
       //console.log(res.data);
       setOrderData(res.data);
-      settOrderStatus(res.data.status);
+      settOrderStatus(res.data.adminStatus);
     };
     getProductDetail();
   }, []);
@@ -123,8 +123,7 @@ const OrderDetail = () => {
             type="checkbox"
             checked={
               orderData?.status == "placed" ||
-              orderData?.status === "delivered" ||
-              orderData?.status == "out delivery"
+              orderData?.status === "delivered"
             }
             style={{ width: "20px", margin: "0 0.3rem 0 0.7rem", height: "20px" }}
           />
@@ -135,8 +134,7 @@ const OrderDetail = () => {
             type="checkbox"
             checked={
               orderData?.status == "placed" ||
-              orderData?.status === "delivered" ||
-              orderData?.status == "out delivery"
+              orderData?.status === "delivered" 
             }
             style={{ width: "20px", margin: "0 0.3rem 0 0.7rem", height: "20px" }}
           />
