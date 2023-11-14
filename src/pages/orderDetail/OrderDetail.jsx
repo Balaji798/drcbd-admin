@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import ApiService from "../../services/ApiService";
 
 const OrderDetail = () => {
   const { orderId } = useParams();
@@ -31,7 +30,7 @@ const OrderDetail = () => {
     }
   };
 
-  console.log(orderStatus)
+  console.log(orderStatus);
   return (
     <>
       <div
@@ -63,6 +62,7 @@ const OrderDetail = () => {
               >
                 <img
                   src={item?.productId?.images[0]}
+                  alt={item?.productId?.images[0]}
                   style={{ width: "100%", objectFit: "contain" }}
                 />
               </div>
@@ -92,7 +92,7 @@ const OrderDetail = () => {
             {orderData?.orderTime.split("T")[1].split("Z")[0]}
           </h3>
         </div>
-        <div>
+        <div style={{paddingLeft:"1rem"}}>
           <h3>User Name:- {orderData?.userId?.fullName}</h3>
           <h2 style={{ padding: "1rem 0" }}> Contact Detail :-</h2>
           <h3>Email:- {orderData?.userId?.email}</h3>
@@ -116,83 +116,158 @@ const OrderDetail = () => {
           </h3>
         </div>
       </div>
-      <div style={{ width: "80%", padding: "1rem 0",display:"flex" }}>
-        <h4 style={{ padding: "0.5rem 0" }}>Order Status :-</h4>
-        <div style={{ display: "flex", alignItems: "center" }}>
+      <h4 style={{ padding: "0.5rem 0" }}>Order Status :-</h4>
+      <div
+        style={{
+          paddingBottom: "1rem",
+          display: "flex",
+          width: "25rem",
+          flexWrap: "wrap",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            padding: "0.5rem",
+            boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+            borderRadius:"5px",
+            marginBottom:"0.5rem",
+            width:"11rem"
+          }}
+        >
           <input
             type="checkbox"
             checked={
-              orderData?.status == "placed" ||
-              orderData?.status === "delivered"
+              orderData?.status === "placed" || orderData?.status === "delivered"
             }
-            style={{ width: "20px", margin: "0 0.3rem 0 0.7rem", height: "20px" }}
+            style={{
+              width: "25px",
+              margin: "0 0.3rem 0 0.7rem",
+              height: "25px",
+            }}
           />
           Order Placed
         </div>
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            padding: "0.5rem",
+            boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+            borderRadius:"5px",
+            margin:"0 0 0.5rem 1.5rem",
+            width:"11rem"
+          }}
+        >
           <input
             type="checkbox"
             checked={
-              orderData?.status == "placed" ||
-              orderData?.status === "delivered" 
+              orderData?.status === "placed" || orderData?.status === "delivered"
             }
-            style={{ width: "20px", margin: "0 0.3rem 0 0.7rem", height: "20px" }}
+            style={{
+              width: "25px",
+              margin: "0 0.3rem 0 0.7rem",
+              height: "25px",
+            }}
           />
           Payment Done
         </div>
 
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            padding: "0.5rem",
+            boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+            borderRadius:"5px",
+            width:"11rem",
+            marginBottom:"0.5rem",
+          }}
+        >
           <input
             type="checkbox"
-            checked={orderStatus === "out delivery" || orderStatus === "delivered"}
+            checked={
+              orderStatus === "out delivery" || orderStatus === "delivered"
+            }
             onChange={(e) => {
               if (orderStatus === "out delivery") {
                 settOrderStatus("placed");
               } else settOrderStatus("out delivery");
             }}
-            style={{ width: "20px", margin: "0 0.3rem 0 0.7rem", height: "20px" }}
+            style={{
+              width: "25px",
+              margin: "0 0.3rem 0 0.7rem",
+              height: "25px",
+            }}
           />
           Out For Delivery
         </div>
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            padding: "0.5rem",
+            boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+            borderRadius:"5px",
+            marginLeft:"1.5rem",
+            width:"11rem",
+            marginBottom:"0.5rem",
+          }}
+        >
           <input
             type="checkbox"
-            checked={
-               orderStatus === "delivered"
-            }
+            checked={orderStatus === "delivered"}
             onChange={(e) => {
               if (orderStatus === "delivered") {
                 settOrderStatus("");
               } else settOrderStatus("delivered");
             }}
-            style={{ width: "20px", margin: "0 0.3rem 0 0.7rem", height: "20px" }}
+            style={{
+              width: "25px",
+              margin: "0 0.3rem 0 0.7rem",
+              height: "25px",
+            }}
           />
           Order Delivered
         </div>
-        <div style={{ display: "flex", alignItems: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            padding: "0.5rem",
+            boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
+            borderRadius:"5px",
+            width:"11rem"
+          }}
+        >
           <input
             type="checkbox"
             checked={
-              orderData?.adminStatus === "cancelled" || orderStatus === "cancelled"
+              orderData?.adminStatus === "cancelled" ||
+              orderStatus === "cancelled"
             }
             onChange={(e) => {
               if (orderStatus === "cancelled") {
                 settOrderStatus("");
               } else settOrderStatus("cancelled");
             }}
-            style={{ width: "20px", margin: "0 0.3rem 0 0.7rem", height: "20px" }}
+            style={{
+              width: "25px",
+              margin: "0 0.3rem 0 0.7rem",
+              height: "25px",
+            }}
           />
           Order Cancelled
         </div>
-
       </div>
-        <button
-          className="button"
-          style={{ margin: "0.5rem 0 2rem 0" }}
-          onClick={changeOrderStatus}
-        >
-          Save Changes
-        </button>
+      <button
+        className="button"
+        style={{ margin: "0.5rem 0 2rem 0" }}
+        onClick={changeOrderStatus}
+      >
+        Save Changes
+      </button>
     </>
   );
 };

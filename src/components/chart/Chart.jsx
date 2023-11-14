@@ -41,7 +41,7 @@ const Chart = ({ title, data, dataKey, grid }) => {
       [dataKey]: monthData.length,
     });
   }
-  console.log(userData)
+ // console.log(userData)
   return (
     <div className="chart">
       <h3 className="chartTitle">{title}</h3>

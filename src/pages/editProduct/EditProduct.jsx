@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import { BiCloudDownload } from "react-icons/bi";
 import axios from "axios";
 
@@ -7,6 +7,7 @@ const EditProduct = () => {
   const [product, setProduct] = useState({});
   const [toDeleteImg, setToDeleteImg] = useState([]);
   const { productId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getProductById();
@@ -16,7 +17,7 @@ const EditProduct = () => {
       "https://drcbd-backend.onrender.com/product/product_by_id",
       { productId: productId }
     );
-    console.log(res.data);
+    //console.log(res.data);
     setProduct(res.data);
   };
 
@@ -53,6 +54,10 @@ const EditProduct = () => {
         "https://drcbd-backend.onrender.com/product/edit_product",
         formData
       );
+      console.log(typeof res.data)
+      if(res.data==="success"){
+        navigate("/products")
+      }
     } catch (error) {
       console.log("Signup failed", error.message);
     }
@@ -264,7 +269,7 @@ const EditProduct = () => {
         value={product?.warningPrecaution}
       />
       <button className="addButton" onClick={handelSubmit}>
-        Add Product
+        Submit
       </button>
     </div>
   );

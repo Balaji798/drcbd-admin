@@ -41,6 +41,21 @@ const Orders = () => {
     });
     setData(filteredData);
   };
+
+  const filterByStatus = (event) => {
+    event.preventDefault();
+    if(event.target.value==="all"){
+      setData(totalOrders);
+      return;
+    }
+    const filterData = totalOrders.filter((item) => {
+      console.log(item.adminStatus , event,item.status === event)
+      if (item.adminStatus === event.target.value||item.status === event.target.value) {
+        return item;
+      }
+    });
+    setData(filterData)
+  };
   const columns = [
     { field: "id", headerName: "ID", width: 50 },
     {
@@ -59,12 +74,19 @@ const Orders = () => {
     {
       field: "product name",
       headerName: "Product Name",
-      width: 250,
+      width: 300,
       renderCell: (params) => {
         return (
-          <div style={{ display: "flex", width: "100%", flexWrap: "wrap" }}>
+          <div style={{ width: "100%" }}>
             {params.row.items.map((item, index) => (
-              <div style={{}} key={index}>
+              <div
+                style={{ display: "flex", alignItems: "center" }}
+                key={index}
+              >
+                <img
+                  src={item?.productId?.images[0]}
+                  style={{ width: 25, height: 25 }}
+                />
                 <p>{item.productId.name},</p>
               </div>
             ))}
@@ -137,12 +159,7 @@ const Orders = () => {
   return (
     <>
       <div className="home">
-        <Chart
-          data={data}
-          title="Orders Analytics"
-          grid
-          dataKey="Orders"
-        />
+        <Chart data={data} title="Orders Analytics" grid dataKey="Orders" />
       </div>
       <div
         style={{
@@ -161,7 +178,7 @@ const Orders = () => {
             alignItems: "center",
           }}
         >
-          <div>
+          <div style={{ marginRight: "0.5rem" }}>
             <p>From</p>
             <input
               style={{ width: 150 }}
@@ -179,6 +196,23 @@ const Orders = () => {
               onChange={(e) => setDate({ ...date, to: e.target.value })}
             />
           </div>
+          <select
+            name="cars"
+            id="cars"
+            style={{
+              width: "15rem",
+              margin: "1rem 1rem 0 1rem",
+              height: "1.5rem",
+            }}
+            onChange={(e) => filterByStatus(e)}
+          >
+            <option value='all'>All Orders</option>
+            <option value="placed">Placed</option>
+            <option value="out delivery">Out For Delivery</option>
+            <option value="pending">Pending</option>
+            <option value="delivered">Delivered</option>
+            <option value="canceled">Canceled</option>
+          </select>
           <button
             style={{ fontSize: 16, marginTop: 16, height: 28 }}
             onClick={filter}

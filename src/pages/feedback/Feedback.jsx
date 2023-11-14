@@ -7,10 +7,7 @@ const Feedback = () => {
   const [reviews, setReviews] = useState([]);
   useEffect(() => {
     const getReviews = async () => {
-      const res = await axios.get(
-        "https://drcbd-backend.onrender.com/review/get-reviews"
-      );
-      console.log(res.data);
+      const res = await axios.get("https://drcbd-backend.onrender.com/review/get-reviews");
       setReviews(res.data);
     };
 
@@ -19,7 +16,20 @@ const Feedback = () => {
   const columns = [
     { field: "id", headerName: "No.", width: 90 },
     { field: "userName", headerName: "User Name", width: 200 },
-    { field: "rating", headerName: "Rating", width: 100 },
+    { field: "rating", headerName: "Rating", width: 70 },
+    {
+      field: "productId",
+      headerName: "Product",
+      width: 200,
+      renderCell: (params) => {
+        return (
+          <div style={{display:"flex",alignItems:"center"}}>
+            <img src={params.row.productId.images[0]} style={{ width: 35 }} />
+            <p>{params.row.productId.name}</p>
+          </div>
+        );
+      },
+    },
     { field: "review", headerName: "Message", width: 500 },
     {
       field: "action",
@@ -32,7 +42,8 @@ const Feedback = () => {
               const res = await axios.delete(
                 `https://drcbd-backend.onrender.com/review/reviewDelete/${params.row._id}`
               );
-              setReviews(res.data)
+              console.log(res.data);
+              setReviews(res.data);
             }}
           />
         );

@@ -1,11 +1,9 @@
 .sidebar {
-  
   width: 12em;
   height: 100vh;
-  background-color: rgb(251, 251, 255);
+  background-image: linear-gradient(to right, #004d4a, #002b2a);
   position: fixed;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
- 
 }
 
 .sidebarWrapper {
@@ -15,11 +13,6 @@
 
 .sidebarMenu {
   margin-bottom: 10px;
-}
-
-.sidebarTitle {
-  font-size: 13px;
-  color: rgb(187, 186, 186);
 }
 
 .sidebarList {
