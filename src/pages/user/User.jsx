@@ -16,8 +16,10 @@ export default function User() {
           "https://drcbd-backend.onrender.com/user/get-user-by-id",
           { userId: location.state.userId }
         );
+        if(res.data){
+          //const resData= await axios.get()
+        }
         setUser(res.data);
-        console.log(res.data);
       } catch (err) {
         console.log(err.message);
       }
@@ -33,18 +35,13 @@ export default function User() {
       <div className="userContainer">
         <div className="userShow">
           <div className="userShowTop">
-            <img
-              src="https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-              alt=""
-              className="userShowImg"
-            />
             <div className="userShowTopTitle">
               <span className="userShowTitle">Full Name</span>
-              <span className="userShowUsername">{user.fullName}</span>
-
+              <span className="userShowUsername">{user?.fullName}</span>
               <span className="userShowTitle">Email</span>
-
-              <span className="userShowUsername">{user.email}</span>
+              <span className="userShowUsername">{user?.email}</span>
+              <span className="userShowTitle">Phone</span>
+              <span className="userShowUsername">{user?.phone}</span>
             </div>
           </div>
           <div className="userShowBottom">
@@ -69,9 +66,9 @@ export default function User() {
         </div>
         <div className="userUpdate">
           {string === "Item Ordered" ? (
-            <ItemOrdered />
+            <ItemOrdered userId={location.state.userId}/>
           ) : (
-            <DeliveryAddress addresses={user.addresses} />
+            <DeliveryAddress addresses={user.userAddress} />
           )}
         </div>
       </div>

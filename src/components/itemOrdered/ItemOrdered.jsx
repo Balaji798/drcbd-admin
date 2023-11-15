@@ -1,21 +1,34 @@
-import React from 'react'
-import {productRows} from '../../dummyData'
+import React, { useEffect, useState } from "react";
+import { productRows } from "../../dummyData";
+import axios from "axios";
 
-const ItemOrdered = () => {
+const ItemOrdered = ({ userId }) => {
+  const [orderData,setOrderData]=useState([]);
+  console.log(userId)
+  useEffect(() => {
+    const getUserOrders = async () => {
+      const res = await axios.post(
+        "http://localhost:8080/orders/get_order",
+        { userId: userId }
+      );
+      setOrderData(res.data);
+    };
+    getUserOrders();
+  }, []);
   return (
     <div>
-      {productRows.map((item,index)=>(
-        <div key={index} style={{display:"flex",alignItems:"center"}}>
-          <img src={item.img} style={{width:100,objectFit:"cover"}}/>
-          <div >
-            <h3>{item.name}</h3>
-            <h4>Price:- {item.price}</h4>
-            <h4>Quantity:- {item.stock}</h4>
+      {orderData[0]?.items?.map((item, index) => (
+        <div key={index} style={{ display: "flex", alignItems: "center" }}>
+          <img src={item.productId.images[0]} style={{ width: 100, objectFit: "cover" }} />
+          <div>
+            <h3>{item.productId.name}</h3>
+            <h4>Price:- {item.productId.price}</h4>
+            <h4>Quantity:- {item.quantity}</h4>
           </div>
         </div>
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default ItemOrdered
+export default ItemOrdered;

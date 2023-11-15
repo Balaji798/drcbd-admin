@@ -1,10 +1,9 @@
 import "./userList.css";
-import { MdDeleteOutline } from "react-icons/md";
 import { StyledDataGrid } from "../../data/StyledDataGrid ";
 import { CustomPagination } from "../../data/StyledDataGrid ";
 import { Link,useNavigate } from "react-router-dom";
 import { GiSunkenEye } from "react-icons/gi";
-import { userData } from "../../dummyData";
+
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Chart from "../../components/chart/Chart";
