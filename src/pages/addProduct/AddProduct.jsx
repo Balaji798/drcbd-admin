@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { BiCloudDownload } from "react-icons/bi";
+
 import axios from "axios";
 import "./addProduct.css";
+import { productIcon } from "../../dummyData";
 
 const AddProduct = () => {
   const [product, setProduct] = useState({
@@ -248,6 +250,11 @@ const AddProduct = () => {
         }
         value={product?.warningPrecaution}
       />
+      <div style={{ display: "flex", flexWrap: "wrap" }}>
+        {productIcon.map((item, index) => (
+          <img src={item} key={index} alt="/" style={{ width: "100px" }} />
+        ))}
+      </div>
       <button className="addButton" onClick={handelSubmit}>
         Add Product
       </button>

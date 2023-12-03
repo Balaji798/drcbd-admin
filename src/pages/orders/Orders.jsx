@@ -44,17 +44,20 @@ const Orders = () => {
 
   const filterByStatus = (event) => {
     event.preventDefault();
-    if(event.target.value==="all"){
+    if (event.target.value === "all") {
       setData(totalOrders);
       return;
     }
     const filterData = totalOrders.filter((item) => {
-      console.log(item.adminStatus , event,item.status === event)
-      if (item.adminStatus === event.target.value||item.status === event.target.value) {
+      console.log(item.adminStatus, event, item.status === event);
+      if (
+        item.adminStatus === event.target.value ||
+        item.status === event.target.value
+      ) {
         return item;
       }
     });
-    setData(filterData)
+    setData(filterData);
   };
   const columns = [
     { field: "id", headerName: "ID", width: 50 },
@@ -181,7 +184,7 @@ const Orders = () => {
           <div style={{ marginRight: "0.5rem" }}>
             <p>From</p>
             <input
-              style={{ width: 150 }}
+              style={{ width: 150, padding: "5px 0" }}
               type="date"
               value={date.from}
               onChange={(e) => setDate({ ...date, from: e.target.value })}
@@ -190,7 +193,7 @@ const Orders = () => {
           <div>
             <p>To</p>
             <input
-              style={{ width: 150 }}
+              style={{ width: 150, padding: "5px 0" }}
               type="date"
               value={date.to}
               onChange={(e) => setDate({ ...date, to: e.target.value })}
@@ -202,11 +205,11 @@ const Orders = () => {
             style={{
               width: "15rem",
               margin: "1rem 1rem 0 1rem",
-              height: "1.5rem",
+              padding: "7px 0",
             }}
             onChange={(e) => filterByStatus(e)}
           >
-            <option value='all'>All Orders</option>
+            <option value="all">All Orders</option>
             <option value="placed">Placed</option>
             <option value="out delivery">Out For Delivery</option>
             <option value="pending">Pending</option>
@@ -214,14 +217,34 @@ const Orders = () => {
             <option value="canceled">Canceled</option>
           </select>
           <button
-            style={{ fontSize: 16, marginTop: 16, height: 28 }}
+            style={{
+              fontSize: 16,
+              marginTop: 16,
+              height: 28,
+              background: "#004d4a",
+              border: "none",
+              padding: "5px",
+              color: "#fff",
+              cursor: "pointer",
+              borderRadius: "5px",
+            }}
             onClick={filter}
           >
             Submit
           </button>
         </div>
         <button
-          style={{ fontSize: 16, marginTop: 16, height: 28 }}
+          style={{
+            fontSize: 16,
+            marginTop: 16,
+            height: 28,
+            background: "#004d4a",
+            border: "none",
+            padding: "5px",
+            color: "#fff",
+            cursor: "pointer",
+            borderRadius: "5px",
+          }}
           onClick={downloadCSV}
         >
           Download Report

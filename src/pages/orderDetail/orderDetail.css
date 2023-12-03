@@ -1,0 +1,17 @@
+.priceDetail > h3 {
+  padding: 0.5rem 1rem 0.5rem 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.inputStyle {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 5px;
+  width: 11rem;
+  margin-bottom: 0.5rem;
+  background: #004d4a;
+  color: #fff;
+}

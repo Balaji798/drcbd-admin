@@ -1,11 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import "./orderDetail.css";
 
 const OrderDetail = () => {
   const { orderId } = useParams();
   const [orderData, setOrderData] = useState(null);
-  const [orderStatus, settOrderStatus] = useState("");
+  const [orderStatus, setOrderStatus] = useState("");
 
   useEffect(() => {
     const getProductDetail = async () => {
@@ -14,7 +15,7 @@ const OrderDetail = () => {
       );
       //console.log(res.data);
       setOrderData(res.data);
-      settOrderStatus(res.data.adminStatus);
+      setOrderStatus(res.data.adminStatus);
     };
     getProductDetail();
   }, []);
@@ -78,9 +79,14 @@ const OrderDetail = () => {
               </div>
             </div>
           ))}
-          <h3>Status :- {orderData?.status}</h3>
-          <h3 style={{ padding: "1rem 0" }}>
-            Order Total Price :- ฿{orderData?.totalPrice}
+          <h3
+            style={{
+              color: "#004d4a",
+              textTransform: "uppercase",
+              padding: "5px 0",
+            }}
+          >
+            Status :- {orderStatus}
           </h3>
           <h3 style={{ paddingBottom: "1rem" }}>
             Order Date:- {orderData?.createdAt.split("T")[0]} Order Time:-
@@ -91,8 +97,16 @@ const OrderDetail = () => {
             Time:-
             {orderData?.orderTime.split("T")[1].split("Z")[0]}
           </h3>
-        </div>
-        <div style={{paddingLeft:"1rem"}}>
+
+          <h2
+            style={{
+              marginTop: "0.5rem",
+              borderBottom: "2px solid",
+              paddingTop: "0.5rem",
+            }}
+          >
+            User Detail
+          </h2>
           <h3>User Name:- {orderData?.userId?.fullName}</h3>
           <h2 style={{ padding: "1rem 0" }}> Contact Detail :-</h2>
           <h3>Email:- {orderData?.userId?.email}</h3>
@@ -102,172 +116,181 @@ const OrderDetail = () => {
               ? orderData?.userId?.mobileNumber
               : "NA"}
           </h3>
-          <h2 style={{ padding: "1rem 0" }}>Delivery Address :-</h2>
-          <h3 style={{ padding: "1rem 0" }}>
-            Contact Number :- {orderData?.deliveryAddress.contactNumber}
-          </h3>
-          <h3>Home:-{orderData?.deliveryAddress?.address}</h3>
-          <h3 style={{ padding: "1rem 0" }}>
-            City:- {orderData?.deliveryAddress.city}
-          </h3>
-          <h3>Postal Code :- {orderData?.deliveryAddress.postalCode}</h3>
-          <h3 style={{ padding: "1rem 0" }}>
-            Country :- {orderData?.deliveryAddress.country}
-          </h3>
         </div>
-      </div>
-      <h4 style={{ padding: "0.5rem 0" }}>Order Status :-</h4>
-      <div
-        style={{
-          paddingBottom: "1rem",
-          display: "flex",
-          width: "25rem",
-          flexWrap: "wrap",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            padding: "0.5rem",
-            boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-            borderRadius:"5px",
-            marginBottom:"0.5rem",
-            width:"11rem"
-          }}
-        >
-          <input
-            type="checkbox"
-            checked={
-              orderData?.status === "placed" || orderData?.status === "delivered"
-            }
-            style={{
-              width: "25px",
-              margin: "0 0.3rem 0 0.7rem",
-              height: "25px",
-            }}
-          />
-          Order Placed
-        </div>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            padding: "0.5rem",
-            boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-            borderRadius:"5px",
-            margin:"0 0 0.5rem 1.5rem",
-            width:"11rem"
-          }}
-        >
-          <input
-            type="checkbox"
-            checked={
-              orderData?.status === "placed" || orderData?.status === "delivered"
-            }
-            style={{
-              width: "25px",
-              margin: "0 0.3rem 0 0.7rem",
-              height: "25px",
-            }}
-          />
-          Payment Done
-        </div>
+        <div style={{ paddingLeft: "1.5rem", width: "45%" }}>
+          <div style={{ padding: "1rem" }} className="priceDetail">
+            <h3>
+              <span>Order Total Price</span>{" "}
+              <span> ฿{orderData?.totalPrice}</span>
+            </h3>
+            <h3>
+              <span>Actual Price</span>
+              <span></span>
+            </h3>
+            <h3>
+              <span>Selling Price</span>
+              <span></span>
+            </h3>
+            <h3>
+              <span>Shipping Fee</span>
+              <span></span>
+            </h3>
+            <h3>
+              <span>Voucher Discount</span>
+              <span></span>
+            </h3>
 
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            padding: "0.5rem",
-            boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-            borderRadius:"5px",
-            width:"11rem",
-            marginBottom:"0.5rem",
-          }}
-        >
-          <input
-            type="checkbox"
-            checked={
-              orderStatus === "out delivery" || orderStatus === "delivered"
-            }
-            onChange={(e) => {
-              if (orderStatus === "out delivery") {
-                settOrderStatus("placed");
-              } else settOrderStatus("out delivery");
-            }}
+            <h3
+              style={{
+                padding: "0.5rem 0",
+                color: "#264043",
+                borderTop: "1px solid",
+                borderBottom: "1px solid",
+              }}
+            >
+              <span>Total Income</span> <span> ฿{orderData?.totalPrice}</span>
+            </h3>
+          </div>
+          <div>
+            <h2 style={{ padding: "1rem 0" }}>Delivery Address :-</h2>
+            <h3 style={{ padding: "1rem 0" }}>
+              Contact Number :- {orderData?.deliveryAddress.contactNumber}
+            </h3>
+            <h3>Home:-{orderData?.deliveryAddress?.address}</h3>
+            <h3 style={{ padding: "1rem 0" }}>
+              City:- {orderData?.deliveryAddress.city}
+            </h3>
+            <h3>Postal Code :- {orderData?.deliveryAddress.postalCode}</h3>
+            <h3 style={{ padding: "1rem 0" }}>
+              Country :- {orderData?.deliveryAddress.country}
+            </h3>
+          </div>
+          <h3
             style={{
-              width: "25px",
-              margin: "0 0.3rem 0 0.7rem",
-              height: "25px",
+              color: "#004d4a",
+              textTransform: "uppercase",
+              padding: "5px 0",
+              
             }}
-          />
-          Out For Delivery
-        </div>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            padding: "0.5rem",
-            boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-            borderRadius:"5px",
-            marginLeft:"1.5rem",
-            width:"11rem",
-            marginBottom:"0.5rem",
-          }}
-        >
-          <input
-            type="checkbox"
-            checked={orderStatus === "delivered"}
-            onChange={(e) => {
-              if (orderStatus === "delivered") {
-                settOrderStatus("");
-              } else settOrderStatus("delivered");
-            }}
+          >
+            Order Status :-
+          </h3>
+          <div
             style={{
-              width: "25px",
-              margin: "0 0.3rem 0 0.7rem",
-              height: "25px",
+              paddingBottom: "1rem",
+              display: "flex",
+              width: "25rem",
+              flexWrap: "wrap",
             }}
-          />
-          Order Delivered
-        </div>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            padding: "0.5rem",
-            boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
-            borderRadius:"5px",
-            width:"11rem"
-          }}
-        >
-          <input
-            type="checkbox"
-            checked={
-              orderData?.adminStatus === "cancelled" ||
-              orderStatus === "cancelled"
-            }
-            onChange={(e) => {
-              if (orderStatus === "cancelled") {
-                settOrderStatus("");
-              } else settOrderStatus("cancelled");
-            }}
-            style={{
-              width: "25px",
-              margin: "0 0.3rem 0 0.7rem",
-              height: "25px",
-            }}
-          />
-          Order Cancelled
+          >
+            <div className="inputStyle">
+              <input
+                type="checkbox"
+                checked={
+                  orderData?.status === "placed" ||
+                  orderData?.status === "delivered"
+                }
+                style={{
+                  width: "25px",
+                  margin: "0 0.3rem 0 0.7rem",
+                  height: "25px",
+                }}
+              />
+              Order Placed
+            </div>
+            <div
+              className="inputStyle"
+              style={{
+                margin: "0 0 0.5rem 1.5rem",
+              }}
+            >
+              <input
+                type="checkbox"
+                checked={
+                  orderData?.status === "placed" ||
+                  orderData?.status === "delivered"
+                }
+                style={{
+                  width: "25px",
+                  margin: "0 0.3rem 0 0.7rem",
+                  height: "25px",
+                }}
+              />
+              Payment Done
+            </div>
+
+            <div className="inputStyle">
+              <input
+                type="checkbox"
+                checked={
+                  orderStatus === "out delivery" || orderStatus === "delivered"
+                }
+                onChange={(e) => {
+                  if (orderStatus === "out delivery") {
+                    setOrderStatus("placed");
+                  } else setOrderStatus("out delivery");
+                }}
+                style={{
+                  width: "25px",
+                  margin: "0 0.3rem 0 0.7rem",
+                  height: "25px",
+                }}
+              />
+              Out For Delivery
+            </div>
+            <div
+              className="inputStyle"
+              style={{
+                marginLeft: "1.5rem",
+                marginBottom: "0.5rem",
+              }}
+            >
+              <input
+                type="checkbox"
+                checked={orderStatus === "delivered"}
+                onChange={(e) => {
+                  if (orderStatus === "delivered") {
+                    setOrderStatus("");
+                  } else setOrderStatus("delivered");
+                }}
+                style={{
+                  width: "25px",
+                  margin: "0 0.3rem 0 0.7rem",
+                  height: "25px",
+                }}
+              />
+              Order Delivered
+            </div>
+            <div className="inputStyle">
+              <input
+                type="checkbox"
+                checked={
+                  orderData?.adminStatus === "cancelled" ||
+                  orderStatus === "cancelled"
+                }
+                onChange={(e) => {
+                  if (orderStatus === "cancelled") {
+                    setOrderStatus("");
+                  } else setOrderStatus("cancelled");
+                }}
+                style={{
+                  width: "25px",
+                  margin: "0 0.3rem 0 0.7rem",
+                  height: "25px",
+                }}
+              />
+              Order Cancelled
+            </div>
+          </div>
+          <button
+            className="button"
+            style={{ margin: "0.5rem 0 2rem 0" }}
+            onClick={changeOrderStatus}
+          >
+            Save Changes
+          </button>
         </div>
       </div>
-      <button
-        className="button"
-        style={{ margin: "0.5rem 0 2rem 0" }}
-        onClick={changeOrderStatus}
-      >
-        Save Changes
-      </button>
     </>
   );
 };

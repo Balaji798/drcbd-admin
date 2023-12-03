@@ -8,8 +8,8 @@
 }
 
 .productListImg {
-    width: 52px;
-    height: 52px;
+    width: 60px;
+    height: 70px;
     /* border-radius: 50%; */
     object-fit: contain;
     margin-right: 10px;

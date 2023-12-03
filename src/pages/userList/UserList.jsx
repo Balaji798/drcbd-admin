@@ -17,13 +17,12 @@ export default function UserList() {
 
   const getUsers = async () => {
     const res = await axios.get("https://drcbd-backend.onrender.com/user/get-users-list");
-    console.log(res.data);
     setData(res.data);
   };
 
-  const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
-  };
+  // const handleDelete = (id) => {
+  //   setData(data.filter((item) => item.id !== id));
+  // };
 
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
@@ -57,7 +56,7 @@ export default function UserList() {
       renderCell: (params) => {
         return (
           <div style={{}}>
-            <a onClick={()=>{navigate('/user-detail',{state:{userId:params.row._id}})}}>
+            <a href="#" onClick={()=>{navigate('/user-detail',{state:{userId:params.row._id}})}}>
               <GiSunkenEye
                 style={{ fontSize: 25, color: "red", cursor: "pointer" }}
               />

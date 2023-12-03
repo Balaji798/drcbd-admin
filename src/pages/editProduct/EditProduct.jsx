@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams,useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { BiCloudDownload } from "react-icons/bi";
 import axios from "axios";
 
@@ -32,7 +32,7 @@ const EditProduct = () => {
       for (let i = 0; i < file.length; i++) {
         formData.append("file", file[i]);
       }
-      formData.append("productId",product._id);
+      formData.append("productId", product._id);
       formData.append("name", product.name);
       formData.append("category", product.category);
       formData.append("productFor", product.productFor);
@@ -44,7 +44,9 @@ const EditProduct = () => {
       formData.append("ingredient", product.ingredient);
       formData.append("suitableFor", product.suitableFor);
       formData.append("use", product.use);
-      formData.append("toDelete",JSON.stringify(toDeleteImg));
+      formData.append("shippingFee", product.shippingFee);
+      formData.append("actualPrice", product.actualPrice);
+      formData.append("toDelete", JSON.stringify(toDeleteImg));
       formData.append(
         "storageContraindication",
         product.storageContraindication
@@ -54,9 +56,9 @@ const EditProduct = () => {
         "https://drcbd-backend.onrender.com/product/edit_product",
         formData
       );
-      console.log(typeof res.data)
-      if(res.data==="success"){
-        navigate("/products")
+      console.log(typeof res.data);
+      if (res.data === "success") {
+        navigate("/products");
       }
     } catch (error) {
       console.log("Signup failed", error.message);
@@ -146,10 +148,16 @@ const EditProduct = () => {
                 height: "13rem",
                 background: "#fff",
                 border: "1px solid",
-                borderRadius:"5px"
+                borderRadius: "5px",
+                marginBottom: 5,
+                overflow: "hidden",
               }}
             >
-              <img src={item} style={{ width: "100%", objectFit: "cover" }} />
+              <img
+                src={item}
+                style={{ width: "100%", objectFit: "cover" }}
+                alt="/"
+              />
               <input
                 type="checkbox"
                 style={{ width: "2.5rem" }}
@@ -167,24 +175,24 @@ const EditProduct = () => {
           ))}
         </div>
       </div>
+      <div style={{ width: "40%" }}>
+        <label>FDA No.</label>
+        <input
+          onChange={(e) => setProduct({ ...product, fda: e.target.value })}
+          style={{ width: "100%", padding: "5px", fontWeight: "bold" }}
+          value={product?.fda}
+        />
+      </div>
       <div
         style={{
           display: "flex",
           alignItems: "center",
-          padding: "10px ",
+          padding: "10px 10px 10px 0",
           flexWrap: "wrap",
           justifyContent: "space-between",
           width: "55%",
         }}
       >
-        <div style={{ width: "45%" }}>
-          <label>FDA No.</label>
-          <input
-            onChange={(e) => setProduct({ ...product, fda: e.target.value })}
-            style={{ width: "100%" }}
-            value={product?.fda}
-          />
-        </div>
         <div style={{ width: "45%" }}>
           <label>Quantity</label>
           <input
@@ -204,12 +212,32 @@ const EditProduct = () => {
             value={product?.size}
           />
         </div>
-        <div style={{ width: "50%", display: "flex", flexDirection: "column" }}>
-          <label>Price In ฿</label>
+        <div style={{ width: "45%", display: "flex", flexDirection: "column" }}>
+          <label>Actual Price In ฿</label>
+          <input
+            onChange={(e) =>
+              setProduct({ ...product, actualPrice: e.target.value })
+            }
+            style={{ width: "100%" }}
+            value={product?.actualPrice}
+          />
+        </div>
+        <div style={{ width: "45%", display: "flex", flexDirection: "column" }}>
+          <label>Selling Price In ฿</label>
           <input
             onChange={(e) => setProduct({ ...product, price: e.target.value })}
             style={{ width: "100%" }}
             value={product?.price}
+          />
+        </div>
+        <div style={{ width: "45%", display: "flex", flexDirection: "column" }}>
+          <label>Shipping Fee In ฿</label>
+          <input
+            onChange={(e) =>
+              setProduct({ ...product, shippingFee: e.target.value })
+            }
+            style={{ width: "100%" }}
+            value={product?.shippingFee}
           />
         </div>
       </div>

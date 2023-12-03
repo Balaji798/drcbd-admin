@@ -9,7 +9,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { useState, useEffect } from "react";
+
 
 const Chart = ({ title, data, dataKey, grid }) => {
 
@@ -28,13 +28,12 @@ const Chart = ({ title, data, dataKey, grid }) => {
     "Nov",
     "Dec",
   ];
-  const currentMonth = new Date().getMonth() + 1;
   const userData = [];
-  for (let i = 0; i <= currentMonth; i++) {
-    let month = new Date(`${new Date().getFullYear()}-01-01`).getMonth() + i;
+  for (let i = 0; i <= 12; i++) {
+    let month = new Date(`${new Date().getFullYear()}-${i + 1}-01`).getMonth() + 1;
     let monthData = data.filter(
       (item) => 
-      item?.createdAt[6] === month.toString()
+      new Date(item.createdAt).getMonth() + 1 === month
     );
     userData.push({
       name: mon[i],

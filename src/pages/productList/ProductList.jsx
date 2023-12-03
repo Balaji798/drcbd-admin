@@ -9,7 +9,6 @@ import ApiService from "../../services/ApiService";
 
 export default function ProductList() {
   const [data, setData] = useState([]);
-  const [productId,setProductId]=useState("")
 
   useEffect(() => {
     getAllProduct();
@@ -28,12 +27,12 @@ export default function ProductList() {
   };
 
   const columns = [
-    { field: "id", headerName: "ID", width: 50 },
+    { field: "id", headerName: "ID", width: 50,height:70 },
     {
       field: "product",
       headerName: "Product",
       width: 250,
-      height:50,
+      height:70,
       renderCell: (params) => {
         return (
           <div className="productListItem">
@@ -43,7 +42,12 @@ export default function ProductList() {
         );
       },
     },
-    {field:"category",headerName:"Category",width:200},
+    {field:"category",headerName:"Category",width:100},
+    {field:"fdaProduct",headerName:"FDA or Non FDA",width:130,      renderCell: (params) => {
+      return (
+        <p>{params.row.fdaProduct?"FDA":"NoN FDA"}</p>
+      );
+    },},
     { field: "quantity", headerName: "Quantity", width: 70 },
     {
       field: "fda",
@@ -109,7 +113,7 @@ console.log(data);
           checkboxSelection
         />
       </div> */}
-      <div style={{ height: 350, width: "100%" }}>
+      <div style={{ height: 550, width: "100%" }}>
         <StyledDataGrid
           rows={rows}
           columns={columns}
