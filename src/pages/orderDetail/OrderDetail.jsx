@@ -34,6 +34,15 @@ const OrderDetail = () => {
   console.log(orderStatus);
   return (
     <>
+      <h2
+        style={{
+          color: "#004d4a",
+          paddingBottom: "1rem",
+          textTransform: "uppercase",
+        }}
+      >
+        Order Id:-{orderData._id}
+      </h2>
       <div
         style={{
           display: "flex",
@@ -48,7 +57,7 @@ const OrderDetail = () => {
               style={{
                 padding: "1rem",
                 display: "flex",
-                color: "#264043",
+                color: "#004d4a",
                 border: "1px solid",
                 borderRadius: "5px",
                 marginBottom: "1rem",
@@ -64,11 +73,18 @@ const OrderDetail = () => {
                 <img
                   src={item?.productId?.images[0]}
                   alt={item?.productId?.images[0]}
-                  style={{ width: "100%", objectFit: "contain" }}
+                  style={{
+                    width: "100%",
+                    objectFit: "contain",
+                    height: "100%",
+                  }}
                 />
               </div>
               <div style={{ padding: "0 1rem 1rem" }}>
-                <h3>Product Name:- {item.productId.name}</h3>
+                <h3 style={{ paddingBottom: "0.5rem" }}>
+                  Product Name:- {item.productId.name}
+                </h3>
+                <h3>Product Id :-{item.productId._id}</h3>
                 <h3 style={{ padding: "1rem 0" }}>
                   Total Quantity:- {item.quantity}
                 </h3>
@@ -170,7 +186,6 @@ const OrderDetail = () => {
               color: "#004d4a",
               textTransform: "uppercase",
               padding: "5px 0",
-              
             }}
           >
             Order Status :-
