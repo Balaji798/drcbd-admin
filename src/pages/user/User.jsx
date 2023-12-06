@@ -14,7 +14,7 @@ export default function User() {
       try {
         const res = await axios.post(
           "https://drcbd-backend.onrender.com/user/get-user-by-id",
-          { userId: location.state.userId }
+          { userId: location?.state?.userId }
         );
         if(res.data){
           //const resData= await axios.get()
@@ -26,7 +26,7 @@ export default function User() {
     };
     getUser();
   }, []);
-
+console.log(location)
   return (
     <div className="user">
       <div className="userTitleContainer">
@@ -66,7 +66,7 @@ export default function User() {
         </div>
         <div className="userUpdate">
           {string === "Item Ordered" ? (
-            <ItemOrdered userId={location.state.userId}/>
+            <ItemOrdered userId={location?.state?.userId}/>
           ) : (
             <DeliveryAddress addresses={user.userAddress} />
           )}
