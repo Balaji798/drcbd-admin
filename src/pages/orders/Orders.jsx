@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Chart from "../../components/chart/Chart";
 import Papa from "papaparse";
-import { userData } from "../../dummyData";
 import { CustomPagination, StyledDataGrid } from "../../data/StyledDataGrid ";
-import ApiService from "../../services/ApiService";
 import { BsEye } from "react-icons/bs";
+// import { ToastContainer, toast } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -89,8 +89,9 @@ const Orders = () => {
                 <img
                   src={item?.productId?.images[0]}
                   style={{ width: 25, height: 25 }}
+                  alt="/"
                 />
-                <p>{item.productId.name},</p>
+                <p>{item.productId?.name},</p>
               </div>
             ))}
           </div>
@@ -158,9 +159,14 @@ const Orders = () => {
     // Clean up by removing the temporary anchor
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+    //toast("Report Dow");
   };
   return (
     <>
+ { /*    <div>
+        <ToastContainer />
+  </div>*/}
+
       <div className="home">
         <Chart data={data} title="Orders Analytics" grid dataKey="Orders" />
       </div>

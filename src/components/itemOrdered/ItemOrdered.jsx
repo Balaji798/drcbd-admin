@@ -8,7 +8,7 @@ const ItemOrdered = ({ userId }) => {
   useEffect(() => {
     const getUserOrders = async () => {
       const res = await axios.post(
-        "http://localhost:8080/orders/get_order",
+        "https://drcbd-backend.onrender.com/orders/get_order",
         { userId: userId }
       );
       setOrderData(res.data);
