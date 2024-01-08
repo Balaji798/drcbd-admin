@@ -23,5 +23,13 @@
 }
 
 input,textarea{
-  padding: 2px 0 2px 5px;
+  padding:5px;
+  border-radius: 5px;
+  border: 1px solid;
+  font-size: 16px;
+}
+
+textarea{
+  min-height: 8rem;
+  max-width:40rem;
 }

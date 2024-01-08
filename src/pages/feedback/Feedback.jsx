@@ -24,8 +24,8 @@ const Feedback = () => {
       renderCell: (params) => {
         return (
           <div style={{display:"flex",alignItems:"center"}}>
-            <img src={params.row.productId.images[0]} style={{ width: 35 }} />
-            <p>{params.row.productId.name}</p>
+            <img src={params?.row?.productId?.images[0]} style={{ width: 35 }} />
+            <p>{params?.row?.productId?.name}</p>
           </div>
         );
       },

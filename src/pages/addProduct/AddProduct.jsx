@@ -73,6 +73,7 @@ const AddProduct = () => {
         product.storageContraindication
       );
       formData.append("warningPrecaution", JSON.stringify(warningPrecaution));
+      formData.append("productIcons", JSON.stringify(productIcons));
       const res = await axios.post(
         "https://drcbd-backend.onrender.com/product/add_product",
         formData
