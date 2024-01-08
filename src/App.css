@@ -33,3 +33,7 @@ textarea{
   min-height: 8rem;
   max-width:40rem;
 }
+
+label{
+  padding: 10px 0 5px;
+}

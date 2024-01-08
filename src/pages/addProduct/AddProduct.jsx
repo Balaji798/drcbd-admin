@@ -2,13 +2,52 @@ import React, { useState, useEffect } from "react";
 import { BiCloudDownload } from "react-icons/bi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { IoMdAddCircleOutline } from "react-icons/io";
+import TextField from "@mui/material/TextField";
 import { RxCross2 } from "react-icons/rx";
 import axios from "axios";
+import { useTheme } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import Chip from "@mui/material/Chip";
 import "./addProduct.css";
 import { productIcon } from "../../dummyData";
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+function getStyles(name, categoryName, theme) {
+  return {
+    fontWeight:
+      categoryName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
+
+function getStyles2(name, purposeName, theme) {
+  return {
+    fontWeight:
+      purposeName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
+
 const AddProduct = () => {
   const [productIcons, setProductIcons] = useState([]);
+  const theme = useTheme();
   const [productFor, setProductFor] = useState([""]);
   const [warningPrecaution, setWarningPrecaution] = useState([""]);
   const [purposeName, setPurposeName] = useState([]);
@@ -143,6 +182,23 @@ const AddProduct = () => {
     "WEIGHT MANAGEMENT",
   ];
 
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    if (product.cbdByCategory === true) {
+      setCategoryName(typeof value === "string" ? value.split(",") : value);
+    }
+  };
+  const handleChange2 = (event) => {
+    const {
+      target: { value },
+    } = event;
+    if (product.cbdByPurpose === true) {
+      setPurposeName(typeof value === "string" ? value.split(",") : value);
+    }
+  };
+  console.log(product.cbdByCategory);
   return (
     <div
       style={{
@@ -152,14 +208,14 @@ const AddProduct = () => {
         flexDirection: "column",
       }}
     >
-      <div style={{ width: "50%" }}>
-        <label>Product Name</label>
-        <input
-          onChange={(e) => setProduct({ ...product, name: e.target.value })}
-          style={{ width: "80%" }}
-          value={product?.name}
-        />
-      </div>
+      <TextField
+        id="productName"
+        label="Product Name"
+        variant="outlined"
+        value={product?.name}
+        onChange={(e) => setProduct({ ...product, name: e.target.value })}
+        style={{ width: "25rem" }}
+      />
       <div style={{ display: "flex", alignItems: "center" }}>
         <div style={{ width: "50%" }}>
           <div style={{ width: "100%", padding: "10px 0 5px" }}>
@@ -173,66 +229,45 @@ const AddProduct = () => {
               }}
               type="checkbox"
               style={{ width: "1rem", height: "1rem", marginLeft: "1rem" }}
-              value={product?.cbdByCategory || false}
+              checked={product?.cbdByCategory || false}
             />
           </div>
-          <div style={{ width: "100%", padding: "10px 0 5px" }}>
-            <label>CBD By Category Category's Name</label>
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                border: "1px solid",
-                width: "80%",
-                padding: 5,
-                minHeight:100
-              }}
-            >
-              {categoryName?.map((item, index) => (
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    padding: "2.5px 3px",
-                    border: "1px solid",
-                    borderRadius: "5px",
-                    marginLeft: 2,
-                    marginBottom: 2,
-                    height:20
-                  }}
-                  key={index}
-                >
-                  <p style={{ fontSize: 13 }}>{item}</p>
-                  <RxCross2
-                    onClick={() => {
-                      const updatedCategories = [...categoryName];
-                      updatedCategories.splice(index, 1);
-                      setCategoryName( updatedCategories);
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
+          <div>
+            <FormControl sx={{ m: 1, width: 300 }}>
+              <InputLabel id="demo-multiple-chip-label">
+                CBD By Category's Category Name
+              </InputLabel>
+              <Select
+                labelId="demo-multiple-chip-label"
+                id="demo-multiple-chip"
+                multiple
+                value={categoryName}
+                onChange={handleChange}
+                input={<OutlinedInput id="select-multiple-chip" label="CBD By Category's Category Name" />}
+                renderValue={(options1) => (
+                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                    {options1.map((value) => (
+                      <Chip key={value} label={value} />
+                    ))}
+                  </Box>
+                )}
+                MenuProps={MenuProps}
+              >
+                {options1.map((name) => (
+                  <MenuItem
+                    key={name}
+                    value={name}
+                    style={getStyles(name, categoryName, theme)}
+                  >
+                    {name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </div>
-          <label style={{ padding: "5px 0 2.5px", marginRight: "1rem" }}>
-            Options
-          </label>
-          <select
-            name={options1[0]}
-            onChange={(e) => {
-              if (!categoryName.includes(e.target.value)&&product.cbdByCategory)
-                setCategoryName([...categoryName, e.target.value]);
-            }}
-          >
-            {options1.map((item, index) => (
-              <option value={item} key={index}>
-                {item}
-              </option>
-            ))}
-          </select>
         </div>
         <div style={{ width: "50%" }}>
-          <div style={{ width: "50%", display: "flex" }}>
+          <div style={{ width: "50%", display: "flex", padding: "15px 0 5px" }}>
             <label>CBD BY PURPOSE</label>
             <input
               onChange={() => {
@@ -244,59 +279,42 @@ const AddProduct = () => {
             />
           </div>
           <div style={{ width: "100%", padding: "10px 0 5px" }}>
-            <label>CBD By Purpose Category's Name</label>
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                border: "1px solid",
-                width: "80%",
-                padding: 5,
-                minHeight:100
-              }}
-            >
-              {purposeName?.map((item, index) => (
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    padding: "2.5px 3px",
-                    border: "1px solid",
-                    borderRadius: "5px",
-                    marginLeft: 2,
-                    marginBottom: 2,
-                    height:20
-                  }}
-                  key={index}
+            <div>
+              <FormControl sx={{ m: 1, width: 300 }}>
+                <InputLabel id="demo-multiple-chip-label">
+                  CBD By Purpose Category Name
+                </InputLabel>
+                <Select
+                  labelId="demo-multiple-chip-label"
+                  id="demo-multiple-chip"
+                  multiple
+                  value={purposeName}
+                  onChange={handleChange2}
+                  input={
+                    <OutlinedInput id="select-multiple-chip" label="CBD By Purpose Category Name" />
+                  }
+                  renderValue={(options2) => (
+                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                      {options2.map((value) => (
+                        <Chip key={value} label={value} />
+                      ))}
+                    </Box>
+                  )}
+                  MenuProps={MenuProps}
                 >
-                  <p style={{ fontSize: 13 }}>{item}</p>
-                  <RxCross2
-                    onClick={() => {
-                      const updatedCategories = [...purposeName];
-                      updatedCategories.splice(index, 1);
-                      setPurposeName(updatedCategories);
-                    }}
-                  />
-                </div>
-              ))}
+                  {options2.map((name) => (
+                    <MenuItem
+                      key={name}
+                      value={name}
+                      style={getStyles2(name, purposeName, theme)}
+                    >
+                      {name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </div>
           </div>
-          <label style={{ padding: "5px 0 2.5px", marginRight: "1rem" }}>
-            Options
-          </label>
-          <select
-            name={options2[0]}
-            onChange={(e) => {
-              if (!purposeName.includes(e.target.value)&&product.cbdByPurpose)
-                setPurposeName([...purposeName, e.target.value]);
-            }}
-          >
-            {options2.map((item, index) => (
-              <option value={item} key={index}>
-                {item}
-              </option>
-            ))}
-          </select>
         </div>
       </div>
 
@@ -323,50 +341,47 @@ const AddProduct = () => {
             display: "flex",
             alignItems: "center",
             padding: "10px ",
+            paddingTop: "20px",
             flexWrap: "wrap",
             justifyContent: "space-between",
             width: "55%",
           }}
         >
-          <div style={{ width: "45%" }}>
-            <label>FDA No.</label>
-            <input
-              onChange={(e) => setProduct({ ...product, fda: e.target.value })}
-              style={{ width: "100%" }}
-              value={product?.fda}
-            />
-          </div>
-          <div style={{ width: "45%" }}>
-            <label>Quantity</label>
-            <input
-              type="number"
-              onChange={(e) =>
-                setProduct({ ...product, quantity: e.target.value })
-              }
-              style={{ width: "100%" }}
-              value={product?.quantity}
-            />
-          </div>
-          <div style={{ width: "45%" }}>
-            <label>Size</label>
-            <input
-              onChange={(e) => setProduct({ ...product, size: e.target.value })}
-              style={{ width: "100%" }}
-              value={product?.size}
-            />
-          </div>
-          <div
-            style={{ width: "50%", display: "flex", flexDirection: "column" }}
-          >
-            <label>Price In ฿</label>
-            <input
-              onChange={(e) =>
-                setProduct({ ...product, price: e.target.value })
-              }
-              style={{ width: "100%" }}
-              value={product?.price}
-            />
-          </div>
+          <TextField
+            id="fda"
+            label="FDA No."
+            variant="outlined"
+            value={product?.fda}
+            onChange={(e) => setProduct({ ...product, fda: e.target.value })}
+            style={{ width: "15rem" }}
+          />
+          <TextField
+            id="fda"
+            type="number"
+            label="Quantity"
+            variant="outlined"
+            value={product?.quantity}
+            onChange={(e) =>
+              setProduct({ ...product, quantity: e.target.value })
+            }
+            style={{ width: "15rem" }}
+          />
+          <TextField
+            id="size"
+            label="Size"
+            variant="outlined"
+            onChange={(e) => setProduct({ ...product, size: e.target.value })}
+            value={product?.size}
+            style={{ width: "15rem" }}
+          />
+          <TextField
+            id="price"
+            label="Price In ฿"
+            variant="outlined"
+            onChange={(e) => setProduct({ ...product, price: e.target.value })}
+            value={product?.price}
+            style={{ width: "15rem" }}
+          />
         </div>
       </div>
       <label>Video Link</label>
