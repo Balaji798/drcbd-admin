@@ -68,8 +68,8 @@ const Orders = () => {
       renderCell: (params) => {
         return (
           <div>
-            <p>{params.row.userId.fullName}</p>
-            <p>{params.row.userId.email}</p>
+            <p>{params?.row?.userId?.fullName}</p>
+            <p>{params?.row.userId?.email}</p>
           </div>
         );
       },
@@ -102,7 +102,7 @@ const Orders = () => {
       field: "totalPrice",
       headerName: "Total Amount",
       renderCell: (params) => {
-        return <p>฿ {params.row.totalPrice.toFixed(2)}</p>;
+        return <p>฿ {params?.row?.totalPrice?.toFixed(2)}</p>;
       },
     },
     {
@@ -125,7 +125,7 @@ const Orders = () => {
       renderCell: (params) => {
         return (
           <Link
-            to={`/order-detail/${params.row._id}`}
+            to={`/order-detail/${params?.row?._id}`}
             style={{
               display: "flex",
               justifyContent: "center",
