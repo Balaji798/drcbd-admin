@@ -105,13 +105,13 @@ const OrderDetail = () => {
             Status :- {orderStatus}
           </h3>
           <h3 style={{ paddingBottom: "1rem" }}>
-            Order Date:- {orderData?.createdAt.split("T")[0]} Order Time:-
-            {orderData?.createdAt.split("T")[1].split("Z")[0]}
+            Order Date:- {orderData?.createdAt?.split("T")[0]} Order Time:-
+            {orderData?.createdAt?.split("T")[1]?.split("Z")[0]}
           </h3>
           <h3>
-            Order Placed Date:- {orderData?.orderTime.split("T")[0]} Order
+            Order Placed Date:- {orderData?.orderTime?.split("T")[0]} Order
             Time:-
-            {orderData?.orderTime.split("T")[1].split("Z")[0]}
+            {orderData?.orderTime?.split("T")[1]?.split("Z")[0]}
           </h3>
 
           <h2
@@ -202,8 +202,8 @@ const OrderDetail = () => {
               <input
                 type="checkbox"
                 checked={
-                  orderData?.status === "placed" ||
-                  orderData?.status === "delivered"
+                  orderData?.status[0]?.orderStatus === "placed" ||
+                  orderData?.status[4]?.orderStatus === "delivered"
                 }
                 style={{
                   width: "25px",
@@ -213,6 +213,7 @@ const OrderDetail = () => {
               />
               Order Placed
             </div>
+
             <div
               className="inputStyle"
               style={{
@@ -222,28 +223,14 @@ const OrderDetail = () => {
               <input
                 type="checkbox"
                 checked={
-                  orderData?.status === "placed" ||
-                  orderData?.status === "delivered"
-                }
-                style={{
-                  width: "25px",
-                  margin: "0 0.3rem 0 0.7rem",
-                  height: "25px",
-                }}
-              />
-              Payment Done
-            </div>
-
-            <div className="inputStyle">
-              <input
-                type="checkbox"
-                checked={
-                  orderStatus === "out delivery" || orderStatus === "delivered"
+                  orderData?.status[1]?.orderStatus === "out for delivery" ||
+                  orderData?.status[4]?.orderStatus === "delivered" ||
+                  orderStatus === "out for delivery" || orderStatus==='delivered'
                 }
                 onChange={(e) => {
-                  if (orderStatus === "out delivery") {
+                  if (orderStatus === "out for delivery") {
                     setOrderStatus("placed");
-                  } else setOrderStatus("out delivery");
+                  } else setOrderStatus("out for delivery");
                 }}
                 style={{
                   width: "25px",
@@ -253,18 +240,15 @@ const OrderDetail = () => {
               />
               Out For Delivery
             </div>
-            <div
-              className="inputStyle"
-              style={{
-                marginLeft: "1.5rem",
-                marginBottom: "0.5rem",
-              }}
-            >
+            <div className="inputStyle">
               <input
                 type="checkbox"
-                checked={orderStatus === "delivered"}
+                checked={
+                  orderData?.status[2]?.orderStatus === "delivered" ||
+                  orderStatus === "delivered"
+                }
                 onChange={(e) => {
-                  if (orderStatus === "delivered") {
+                  if (orderData?.status[4]?.orderStatus === "delivered") {
                     setOrderStatus("");
                   } else setOrderStatus("delivered");
                 }}
@@ -276,15 +260,18 @@ const OrderDetail = () => {
               />
               Order Delivered
             </div>
-            <div className="inputStyle">
+            <div
+              className="inputStyle"
+              style={{
+                marginLeft: "1.5rem",
+                marginBottom: "0.5rem",
+              }}
+            >
               <input
                 type="checkbox"
-                checked={
-                  orderData?.adminStatus === "cancelled" ||
-                  orderStatus === "cancelled"
-                }
+                checked={orderData?.status[4]?.orderStatus === "cancelled"}
                 onChange={(e) => {
-                  if (orderStatus === "cancelled") {
+                  if (orderData?.status[4]?.orderStatus === "cancelled") {
                     setOrderStatus("");
                   } else setOrderStatus("cancelled");
                 }}
