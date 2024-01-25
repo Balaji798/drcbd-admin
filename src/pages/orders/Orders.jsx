@@ -28,6 +28,7 @@ const Orders = () => {
       const res = await axios.get(
         "https://drcbd-backend.onrender.com/orders/get_all_orders"
       );
+      
       setData(res.data);
       setOrders(res.data);
     };
@@ -108,11 +109,19 @@ const Orders = () => {
     {
       field: "status",
       headerName: "Status",
+      renderCell: (params) => {
+        return (
+          <p>{params?.row?.status[params?.row?.status?.length-1].orderStatus}</p>
+        )}
     },
     {
       field: "orderTime",
       headerName: "Payment Time",
       width: 200,
+      renderCell: (params) => {
+        return (
+          <p>{params?.row?.status[params?.row?.status?.length-1].statusTime}</p>
+        )}
     },
     {
       field: "createdAt",
@@ -145,14 +154,33 @@ const Orders = () => {
   }));
 
   const downloadCSV = () => {
-    const csv = Papa.unparse(data);
+    const transformedData = data.map(order => {
+      const deliveryDetails = order.deliveryAddress;
+      const products = order.items.map(item => ({
+        _id: order._id,
+        address: deliveryDetails?.address,
+        city: deliveryDetails?.city,
+        contactNumber: deliveryDetails?.contactNumber,
+        country: deliveryDetails?.country,
+        postalCode: deliveryDetails?.postalCode,
+        name: item.productId?.name,
+        price: item.productId?.price,
+        orderStatus: order?.status[order?.status?.length-1]?.orderStatus
+      }));
+    
+      return products;
+    });
+    
+    // Flatten the array of arrays
+    const flattenedData = transformedData.flat();
+    const csv = Papa.unparse(flattenedData);
     const blob = new Blob([csv], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
 
     // Create a temporary anchor element to initiate the download
     const a = document.createElement("a");
     a.href = url;
-    a.download = "data.csv";
+    a.download = `order_${new Date().getDate()}-${new Date().getMonth()+1}-${new Date().getFullYear()}.csv`;
     document.body.appendChild(a);
     a.click();
 
