@@ -13,7 +13,7 @@ const OrderDetail = () => {
       const res = await axios.get(
         `https://drcbd-backend.onrender.com/orders/get_order_detail_by_id/${orderId}`
       );
-      //console.log(res.data);
+      console.log(res.data);
       setOrderData(res.data);
       setOrderStatus(res.data.adminStatus);
     };
@@ -149,7 +149,7 @@ const OrderDetail = () => {
             </h3>
             <h3>
               <span>Shipping Fee</span>
-              <span></span>
+              <span>฿{orderData?.totalDeliveryCharge}</span>
             </h3>
             <h3>
               <span>Voucher Discount</span>
@@ -164,7 +164,7 @@ const OrderDetail = () => {
                 borderBottom: "1px solid",
               }}
             >
-              <span>Total Income</span> <span> ฿{orderData?.totalPrice}</span>
+              <span>Total Income</span> <span> ฿{orderData?.totalPrice+orderData?.totalDeliveryCharge}</span>
             </h3>
           </div>
           <div>
@@ -202,7 +202,7 @@ const OrderDetail = () => {
               <input
                 type="checkbox"
                 checked={
-                  orderData?.status[0]?.orderStatus === "placed" ||
+                  orderData?.status[1]?.orderStatus === "placed" ||
                   orderData?.status[4]?.orderStatus === "delivered"
                 }
                 style={{

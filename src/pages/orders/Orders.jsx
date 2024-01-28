@@ -28,9 +28,9 @@ const Orders = () => {
       const res = await axios.get(
         "https://drcbd-backend.onrender.com/orders/get_all_orders"
       );
-      
-      setData(res.data);
-      setOrders(res.data);
+      const data = res.data.filter(item=> {return item.status[item.status.length-1].orderStatus!=='pending'})
+      setData(data);
+      setOrders(data);
     };
     getOrders();
   }, []);
@@ -38,10 +38,19 @@ const Orders = () => {
   const filter = () => {
     const filteredData = totalOrders.filter((item) => {
       const itemDate = new Date(item.createdAt);
-      return itemDate >= new Date(date.from) && itemDate <= new Date(date.to);
+      itemDate.setHours(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to zero
+      
+      const fromDate = new Date(date.from);
+      fromDate.setHours(0, 0, 0, 0);
+      
+      const toDate = new Date(date.to);
+      toDate.setHours(0, 0, 0, 0);
+      
+      return itemDate >= fromDate && itemDate <= toDate;
     });
+    console.log(filteredData);
     setData(filteredData);
-  };
+};
 
   const filterByStatus = (event) => {
     event.preventDefault();
@@ -230,7 +239,10 @@ const Orders = () => {
               style={{ width: 150, padding: "5px 0" }}
               type="date"
               value={date.to}
-              onChange={(e) => setDate({ ...date, to: e.target.value })}
+              onChange={(e) => {
+                console.log(e.target.value)
+                setDate({ ...date, to: e.target.value })
+              }}
             />
           </div>
           <select

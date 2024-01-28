@@ -28,11 +28,11 @@ const Sidebar = () => {
       title:"Orders",
       link:"/orders"
     },
-    {
-      title: "Sales",
-      //icon: <TrendingUp className="sidebarIcon" />,
-      link: "/sales",
-    },
+    // {
+    //   title: "Sales",
+    //   //icon: <TrendingUp className="sidebarIcon" />,
+    //   link: "/sales",
+    // },
     {
       title: "Products",
       //icon: <Storefront className="sidebarIcon" />,
@@ -43,15 +43,15 @@ const Sidebar = () => {
       //icon: <Timeline className="sidebarIcon" />,
       link: "/top_spender",
     },
-    {
-      title:"CBD University",
-      link:"/cbd-university"
-    },
-    {
-      title: "Reports",
-      //icon: <BarChart className="sidebarIcon" />,
-      link: "/report",
-    },
+    // {
+    //   title:"CBD University",
+    //   link:"/cbd-university"
+    // },
+    // {
+    //   title: "Reports",
+    //   //icon: <BarChart className="sidebarIcon" />,
+    //   link: "/report",
+    // },
     {
       title:"Feedback",
       //icon:<DynamicFeed className="sidebarIcon" />,
