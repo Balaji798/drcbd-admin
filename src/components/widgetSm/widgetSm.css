@@ -15,7 +15,11 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    object-fit: cover;
+    background-color: aqua;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: capitalize;
 }
 
 .widgetSmList{
@@ -34,6 +38,7 @@
 .widgetSmUser{
     display: flex;
     flex-direction: column;
+    width: 50%;
 }
 
 .widgetSmUsername{

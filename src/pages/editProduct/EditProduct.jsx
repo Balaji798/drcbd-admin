@@ -7,6 +7,13 @@ import { RxCross2 } from "react-icons/rx";
 import axios from "axios";
 import { productIcon } from "../../dummyData";
 import "./editProduct.css";
+import Box from "@mui/material/Box";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import Chip from "@mui/material/Chip";
 
 const EditProduct = () => {
   const [product, setProduct] = useState({});
