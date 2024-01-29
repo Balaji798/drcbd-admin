@@ -7,6 +7,7 @@ import { RxCross2 } from "react-icons/rx";
 import axios from "axios";
 import { productIcon } from "../../dummyData";
 import "./editProduct.css";
+import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputLabel from "@mui/material/InputLabel";
@@ -14,8 +15,38 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
+import { useTheme } from "@mui/material/styles";
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+function getStyles(name, categoryName, theme) {
+  return {
+    fontWeight:
+      categoryName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
+
+function getStyles2(name, purposeName, theme) {
+  return {
+    fontWeight:
+      purposeName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
 const EditProduct = () => {
+  const theme = useTheme();
   const [product, setProduct] = useState({});
   const [productIcons, setProductIcons] = useState([]);
   const [toDeleteImg, setToDeleteImg] = useState([]);
@@ -151,6 +182,23 @@ const EditProduct = () => {
     "WEIGHT MANAGEMENT",
   ];
 
+  const handleChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    if (product.cbdByCategory === true) {
+      setCategoryName(typeof value === "string" ? value.split(",") : value);
+    }
+  };
+  const handleChange2 = (event) => {
+    const {
+      target: { value },
+    } = event;
+    if (product.cbdByPurpose === true) {
+      setPurposeName(typeof value === "string" ? value.split(",") : value);
+    }
+  };
+
   return (
     <div
       style={{
@@ -162,11 +210,13 @@ const EditProduct = () => {
       className="edit_product"
     >
       <div style={{ width: "50%" }}>
-        <label>Product Name</label>
-        <input
-          onChange={(e) => setProduct({ ...product, name: e.target.value })}
-          style={{ width: "80%" }}
+        <TextField
+          id="productName"
+          label="Product Name"
+          variant="outlined"
           value={product?.name}
+          onChange={(e) => setProduct({ ...product, name: e.target.value })}
+          style={{ width: "25rem" }}
         />
       </div>
       <div style={{ display: "flex", alignItems: "center" }}>
@@ -185,60 +235,44 @@ const EditProduct = () => {
               value={product?.cbdByCategory || false}
             />
           </div>
-          <div style={{ width: "100%", padding: "10px 0 5px" }}>
-            <label>CBD By Category Category's Name</label>
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                border: "1px solid",
-                width: "80%",
-                padding: 5,
-                minHeight: 100,
-              }}
-            >
-              {categoryName?.map((item, index) => (
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    padding: "2.5px 3px",
-                    border: "1px solid",
-                    borderRadius: "5px",
-                    marginLeft: 2,
-                    marginBottom: 2,
-                    height: 20,
-                  }}
-                  key={index}
-                >
-                  <p style={{ fontSize: 13 }}>{item}</p>
-                  <RxCross2
-                    onClick={() => {
-                      const updatedCategories = [...categoryName];
-                      updatedCategories.splice(index, 1);
-                      setCategoryName(updatedCategories);
-                    }}
+          <div>
+            <FormControl sx={{ m: 1, width: 300 }}>
+              <InputLabel id="demo-multiple-chip-label">
+                CBD By Category's Category Name
+              </InputLabel>
+              <Select
+                labelId="demo-multiple-chip-label"
+                id="demo-multiple-chip"
+                multiple
+                value={categoryName}
+                onChange={handleChange}
+                input={
+                  <OutlinedInput
+                    id="select-multiple-chip"
+                    label="CBD By Category's Category Name"
                   />
-                </div>
-              ))}
-            </div>
+                }
+                renderValue={(options1) => (
+                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                    {options1.map((value) => (
+                      <Chip key={value} label={value} />
+                    ))}
+                  </Box>
+                )}
+                MenuProps={MenuProps}
+              >
+                {options1.map((name) => (
+                  <MenuItem
+                    key={name}
+                    value={name}
+                    style={getStyles(name, categoryName, theme)}
+                  >
+                    {name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </div>
-          <label style={{ padding: "5px 0 2.5px", marginRight: "1rem" }}>
-            Options
-          </label>
-          <select
-            name={options1[0]}
-            onChange={(e) => {
-              if (!categoryName.includes(e.target.value))
-                setCategoryName([...categoryName, e.target.value]);
-            }}
-          >
-            {options1.map((item, index) => (
-              <option value={item} key={index}>
-                {item}
-              </option>
-            ))}
-          </select>
         </div>
         <div style={{ width: "50%" }}>
           <div style={{ width: "50%", display: "flex" }}>
@@ -252,60 +286,44 @@ const EditProduct = () => {
               checked={product?.cbdByPurpose || false}
             />
           </div>
-          <div style={{ width: "100%", padding: "10px 0 5px" }}>
-            <label>CBD By Purpose Category's Name</label>
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                border: "1px solid",
-                width: "80%",
-                padding: 5,
-                minHeight: 100,
-              }}
-            >
-              {purposeName?.map((item, index) => (
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    padding: "2.5px 3px",
-                    border: "1px solid",
-                    borderRadius: "5px",
-                    marginLeft: 2,
-                    marginBottom: 2,
-                    height: 20,
-                  }}
-                  key={index}
-                >
-                  <p style={{ fontSize: 13 }}>{item}</p>
-                  <RxCross2
-                    onClick={() => {
-                      const updatedCategories = [...purposeName];
-                      updatedCategories.splice(index, 1);
-                      setPurposeName(updatedCategories);
-                    }}
+          <div>
+            <FormControl sx={{ m: 1, width: 300 }}>
+              <InputLabel id="demo-multiple-chip-label">
+                CBD By Purpose Category Name
+              </InputLabel>
+              <Select
+                labelId="demo-multiple-chip-label"
+                id="demo-multiple-chip"
+                multiple
+                value={purposeName}
+                onChange={handleChange2}
+                input={
+                  <OutlinedInput
+                    id="select-multiple-chip"
+                    label="CBD By Purpose Category Name"
                   />
-                </div>
-              ))}
-            </div>
+                }
+                renderValue={(options2) => (
+                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                    {options2.map((value) => (
+                      <Chip key={value} label={value} />
+                    ))}
+                  </Box>
+                )}
+                MenuProps={MenuProps}
+              >
+                {options2.map((name) => (
+                  <MenuItem
+                    key={name}
+                    value={name}
+                    style={getStyles2(name, purposeName, theme)}
+                  >
+                    {name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </div>
-          <label style={{ padding: "5px 0 2.5px", marginRight: "1rem" }}>
-            Options
-          </label>
-          <select
-            name={options2[0]}
-            onChange={(e) => {
-              if (!purposeName.includes(e.target.value))
-                setPurposeName([...purposeName, e.target.value]);
-            }}
-          >
-            {options2.map((item, index) => (
-              <option value={item} key={index}>
-                {item}
-              </option>
-            ))}
-          </select>
         </div>
       </div>
       {/* <label>Product Images</label>
@@ -370,12 +388,14 @@ const EditProduct = () => {
           ))}
         </div>
       </div>
-      <div style={{ width: "40%" }}>
-        <label>FDA No.</label>
-        <input
-          onChange={(e) => setProduct({ ...product, fda: e.target.value })}
-          style={{ width: "100%", padding: "5px", fontWeight: "bold" }}
+      <div style={{ width: "40%", marginTop: "2rem" }}>
+        <TextField
+          id="fda"
+          label="FDA No."
+          variant="outlined"
           value={product?.fda}
+          onChange={(e) => setProduct({ ...product, fda: e.target.value })}
+          style={{ width: "15rem" }}
         />
       </div>
       <div
@@ -389,50 +409,48 @@ const EditProduct = () => {
         }}
       >
         <div style={{ width: "45%" }}>
-          <label>Quantity</label>
-          <input
+          <TextField
+            id="fda"
             type="number"
+            label="Quantity"
+            variant="outlined"
+            value={product?.quantity}
             onChange={(e) =>
               setProduct({ ...product, quantity: e.target.value })
             }
-            style={{ width: "100%" }}
-            value={product?.quantity}
+            style={{ width: "15rem" }}
           />
         </div>
         <div style={{ width: "45%" }}>
-          <label>Size</label>
-          <input
+          <TextField
+            id="size"
+            label="Size"
+            variant="outlined"
             onChange={(e) => setProduct({ ...product, size: e.target.value })}
-            style={{ width: "100%" }}
             value={product?.size}
+            style={{ width: "15rem" }}
           />
         </div>
-        <div style={{ width: "45%", display: "flex", flexDirection: "column" }}>
-          <label>Actual Price In ฿</label>
-          <input
+        <div style={{ width: "45%", display: "flex", flexDirection: "column", marginTop: "1rem" }}>
+          <TextField
+            id="price"
+            label="Actual price In ฿"
+            variant="outlined"
             onChange={(e) =>
               setProduct({ ...product, actualPrice: e.target.value })
             }
-            style={{ width: "100%" }}
-            value={product?.actualPrice}
-          />
-        </div>
-        <div style={{ width: "45%", display: "flex", flexDirection: "column" }}>
-          <label>Selling Price In ฿</label>
-          <input
-            onChange={(e) => setProduct({ ...product, price: e.target.value })}
-            style={{ width: "100%" }}
             value={product?.price}
+            style={{ width: "15rem" }}
           />
         </div>
-        <div style={{ width: "45%", display: "flex", flexDirection: "column" }}>
-          <label>Shipping Fee In ฿</label>
-          <input
-            onChange={(e) =>
-              setProduct({ ...product, shippingFee: e.target.value })
-            }
-            style={{ width: "100%" }}
-            value={product?.shippingFee}
+        <div style={{ width: "45%", display: "flex", flexDirection: "column", marginTop: "1rem" }}>
+          <TextField
+            id="price"
+            label="Selling price In ฿"
+            variant="outlined"
+            onChange={(e) => setProduct({ ...product, price: e.target.value })}
+            value={product?.price}
+            style={{ width: "15rem" }}
           />
         </div>
       </div>
