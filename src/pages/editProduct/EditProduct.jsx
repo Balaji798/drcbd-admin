@@ -107,6 +107,7 @@ const EditProduct = () => {
         "storageContraindication",
         product.storageContraindication
       );
+      formData.append('contraindication', product.contraindication)
       formData.append("warningPrecaution", JSON.stringify(warningPrecaution));
       formData.append("productIcons", JSON.stringify(productIcons));
       const res = await axios.post(
@@ -209,7 +210,6 @@ const EditProduct = () => {
       }}
       className="edit_product"
     >
-      <div style={{ width: "50%" }}>
         <TextField
           id="productName"
           label="Product Name"
@@ -218,7 +218,6 @@ const EditProduct = () => {
           onChange={(e) => setProduct({ ...product, name: e.target.value })}
           style={{ width: "25rem" }}
         />
-      </div>
       <div style={{ display: "flex", alignItems: "center" }}>
         <div style={{ width: "50%" }}>
           <div style={{ width: "100%", padding: "10px 0 5px" }}>
@@ -388,7 +387,6 @@ const EditProduct = () => {
           ))}
         </div>
       </div>
-      <div style={{ width: "40%", marginTop: "2rem" }}>
         <TextField
           id="fda"
           label="FDA No."
@@ -397,7 +395,6 @@ const EditProduct = () => {
           onChange={(e) => setProduct({ ...product, fda: e.target.value })}
           style={{ width: "15rem" }}
         />
-      </div>
       <div
         style={{
           display: "flex",
@@ -431,7 +428,7 @@ const EditProduct = () => {
             style={{ width: "15rem" }}
           />
         </div>
-        <div style={{ width: "45%", display: "flex", flexDirection: "column", marginTop: "1rem" }}>
+        <div style={{  marginTop: "1rem" }}>
           <TextField
             id="price"
             label="Actual price In ฿"
@@ -537,12 +534,19 @@ const EditProduct = () => {
         onChange={(e) => setProduct({ ...product, use: e.target.value })}
         value={product?.use}
       />
-      <label>Storage & Contraindication</label>
+      <label>Storage Condition</label>
       <textarea
         onChange={(e) =>
           setProduct({ ...product, storageContraindication: e.target.value })
         }
         value={product?.storageContraindication}
+      />
+      <label>Contraindication</label>
+      <textarea
+        onChange={(e) =>
+          setProduct({ ...product, contraindication: e.target.value })
+        }
+        value={product?.contraindication}
       />
       <label>Warning & Precaution</label>
       {warningPrecaution?.map((item, index) => (

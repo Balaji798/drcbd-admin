@@ -67,6 +67,7 @@ const AddProduct = () => {
     warningPrecaution: "",
     productFor: "",
     videoLink: "",
+    contraindication:''
   });
   const [file, setFile] = useState("");
 
@@ -107,6 +108,7 @@ const AddProduct = () => {
       formData.append("ingredient", product.ingredient);
       formData.append("suitableFor", product.suitableFor);
       formData.append("use", product.use);
+      formData.append('contraindication', product.contraindication)
       formData.append(
         "storageContraindication",
         product.storageContraindication
@@ -467,10 +469,17 @@ const AddProduct = () => {
         onChange={(e) => setProduct({ ...product, use: e.target.value })}
         value={product?.use}
       />
-      <label>Storage & Contraindication</label>
+      <label>Storage Condition</label>
       <textarea
         onChange={(e) =>
           setProduct({ ...product, storageContraindication: e.target.value })
+        }
+        value={product?.storageContraindication}
+      />
+      <label>Contraindication</label>
+      <textarea
+        onChange={(e) =>
+          setProduct({ ...product, contraindication: e.target.value })
         }
         value={product?.storageContraindication}
       />
