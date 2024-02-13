@@ -403,6 +403,7 @@ const EditProduct = () => {
           flexWrap: "wrap",
           justifyContent: "space-between",
           width: "55%",
+          marginTop:"1rem"
         }}
       >
         <div style={{ width: "45%" }}>
@@ -436,7 +437,7 @@ const EditProduct = () => {
             onChange={(e) =>
               setProduct({ ...product, actualPrice: e.target.value })
             }
-            value={product?.price}
+            value={product?.actualPrice}
             style={{ width: "15rem" }}
           />
         </div>
