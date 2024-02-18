@@ -13,7 +13,7 @@ export default function User() {
     const getUser = async () => {
       try {
         const res = await axios.post(
-          "http://52.77.244.89:8080user/get-user-by-id",
+          "http://52.77.244.89:8080/user/get-user-by-id",
           { userId: location?.state?.userId }
         );
         if(res.data){

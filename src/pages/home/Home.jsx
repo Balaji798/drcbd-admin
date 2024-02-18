@@ -15,7 +15,7 @@ export default function Home() {
   useEffect(() => {
     const getUsers = async () => {
       const res = await axios.get(
-        "http://52.77.244.89:8080user/get-users-list"
+        "http://52.77.244.89:8080/user/get-users-list"
       );
       const user = res.data.filter((item) => {
         const objDate = new Date(item.createdAt);
@@ -30,7 +30,7 @@ export default function Home() {
       setMontUser(user);
       setTotalUser(res?.data?.length);
       const sales = await axios.get(
-        "http://52.77.244.89:8080orders/get_all_orders"
+        "http://52.77.244.89:8080/orders/get_all_orders"
       );
       const sale = sales?.data?.reduce((accumulator, current) => {
         const lastOrderStatus =

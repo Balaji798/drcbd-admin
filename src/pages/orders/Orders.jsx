@@ -26,7 +26,7 @@ const Orders = () => {
     const getOrders = async () => {
       //const res = await ApiService.getOrders();
       const res = await axios.get(
-        "http://52.77.244.89:8080orders/get_all_orders"
+        "http://52.77.244.89:8080/orders/get_all_orders"
       );
       const data = res.data.filter(item=> {return item.status[item.status.length-1].orderStatus!=='pending'})
       setData(data);
