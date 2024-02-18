@@ -11,7 +11,7 @@ const OrderDetail = () => {
   useEffect(() => {
     const getProductDetail = async () => {
       const res = await axios.get(
-        `https://drcbd-backend.onrender.com/orders/get_order_detail_by_id/${orderId}`
+        `http://52.77.244.89:8080orders/get_order_detail_by_id/${orderId}`
       );
       console.log(res.data);
       setOrderData(res.data);
@@ -23,7 +23,7 @@ const OrderDetail = () => {
   const changeOrderStatus = async () => {
     try {
       const res = await axios.post(
-        `https://drcbd-backend.onrender.com/orders/update_order_by_admin/${orderId}`,
+        `http://52.77.244.89:8080orders/update_order_by_admin/${orderId}`,
         { status: orderStatus }
       );
     } catch (err) {

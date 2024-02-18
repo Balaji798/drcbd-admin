@@ -62,7 +62,7 @@ const EditProduct = () => {
   }, []);
   const getProductById = async () => {
     const res = await axios.post(
-      "https://drcbd-backend.onrender.com/product/product_by_id",
+      "http://52.77.244.89:8080product/product_by_id",
       { productId: productId }
     );
     //console.log(res.data);
@@ -111,7 +111,7 @@ const EditProduct = () => {
       formData.append("warningPrecaution", JSON.stringify(warningPrecaution));
       formData.append("productIcons", JSON.stringify(productIcons));
       const res = await axios.post(
-        "https://drcbd-backend.onrender.com/product/edit_product",
+        "http://52.77.244.89:8080product/edit_product",
         formData
       );
       console.log(typeof res.data);
