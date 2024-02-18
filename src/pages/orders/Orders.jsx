@@ -174,7 +174,8 @@ const Orders = () => {
         postalCode: deliveryDetails?.postalCode,
         name: item.productId?.name,
         price: item.productId?.price,
-        orderStatus: order?.status[order?.status?.length-1]?.orderStatus
+        orderStatus: order?.status[order?.status?.length-1]?.orderStatus,
+        userName:item.productId?.name
       }));
     
       return products;

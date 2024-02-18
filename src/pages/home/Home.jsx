@@ -37,16 +37,16 @@ export default function Home() {
           accumulator?.status?.[accumulator?.status?.length - 1]?.orderStatus;
       
         if (lastOrderStatus !== "pending" && !isNaN(current?.totalPrice)) {
-          const userEmail = current.userId.email;
+          const userEmail = current?.userId?.email;
       
           if (accumulator[userEmail]) {
             // If the user already exists in the map, update the totalPrice
-            accumulator[userEmail].totalPrice += current.totalPrice;
+            accumulator[userEmail].totalPrice += current?.totalPrice;
           } else {
             // If the user doesn't exist, add them to the map
             accumulator[userEmail] = {
-              userId: current.userId,
-              totalPrice: current.totalPrice,
+              userId: current?.userId,
+              totalPrice: current?.totalPrice,
             };
           }
         }
@@ -59,10 +59,10 @@ export default function Home() {
       sales.data.map((item) => {
         if (
           item?.items?.length > 0 &&
-          item?.status[item?.status?.length - 1].orderStatus !== "pending" &&
+          item?.status[item?.status?.length - 1]?.orderStatus !== "pending" &&
           isNaN(item?.totalPrice)
         ) {
-          price += Number(item.totalPrice);
+          price += Number(item?.totalPrice);
         }
       });
       console.log(price);

@@ -1,7 +1,6 @@
 import "./featuredInfo.css";
-import { AiOutlineArrowDown, AiOutlineArrowUp } from "react-icons/ai";
 
-export default function FeaturedInfo({totalUser,totalSales,monthUser,monthSales}) {
+export default function FeaturedInfo({totalUser,totalSales,monthUser}) {
   return (
     <div className="featured">
       <div className="featuredItem">

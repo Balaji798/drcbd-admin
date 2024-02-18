@@ -12,13 +12,13 @@ export default function WidgetSm({ monthUser }) {
           <li className="widgetSmListItem" key={index}>
             <div
               className="widgetSmImg"
-            >{item.fullName.split(' ').map(word => word[0]).join('')}</div>
+            >{item?.fullName.split(' ').map(word => word[0]).join('')}</div>
             <div className="widgetSmUser">
-              <span className="widgetSmUsername">{item.fullName}</span>
-              <span className="widgetSmUserTitle">{item.email}</span>
+              <span className="widgetSmUsername">{item?.fullName}</span>
+              <span className="widgetSmUserTitle">{item?.email}</span>
             </div>
             <button className="widgetSmButton" onClick={() => {
-              navigate("/user-detail", { state: { userId: item._id } });
+              navigate("/user-detail", { state: { userId: item?._id } });
             }}>
               <LiaEyeSolid className="widgetSmIcon" />
               Display
