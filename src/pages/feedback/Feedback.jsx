@@ -40,7 +40,7 @@ const Feedback = () => {
             size={25}
             onClick={async () => {
               const res = await axios.delete(
-                `https://52.77.244.89:8080/review/reviewDelete/${params.row._id}`
+                `https://drcbd-backend.onrender.com/review/reviewDelete/${params.row._id}`
               );
               console.log(res.data);
               setReviews(res.data);

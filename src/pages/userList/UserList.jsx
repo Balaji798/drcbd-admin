@@ -30,7 +30,7 @@ export default function UserList() {
 
   const getUsers = async () => {
     const res = await axios.get(
-      "https://52.77.244.89:8080/user/get-users-list"
+      "https://drcbd-backend.onrender.com/user/get-users-list"
     );
     setData(res.data);
     setOrders(res.data)
