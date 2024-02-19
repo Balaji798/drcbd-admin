@@ -40,7 +40,7 @@ const Feedback = () => {
             size={25}
             onClick={async () => {
               const res = await axios.delete(
-                `http://52.77.244.89:8080/review/reviewDelete/${params.row._id}`
+                `https://52.77.244.89:8080/review/reviewDelete/${params.row._id}`
               );
               console.log(res.data);
               setReviews(res.data);
