@@ -7,7 +7,7 @@ const Feedback = () => {
   const [reviews, setReviews] = useState([]);
   useEffect(() => {
     const getReviews = async () => {
-      const res = await axios.get("http://52.77.244.89:8080review/get-reviews");
+      const res = await axios.get("https://drcbd-backend.onrender.com/review/get-reviews");
       setReviews(res.data);
     };
 
