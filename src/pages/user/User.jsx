@@ -26,6 +26,7 @@ export default function User() {
     };
     getUser();
   }, []);
+  
 console.log(location)
   return (
     <div className="user">
@@ -44,34 +45,13 @@ console.log(location)
               <span className="userShowUsername">{user?.phone}</span>
             </div>
           </div>
-          <div className="userShowBottom">
-            <div className="userShowTitle">Total Purchases</div>
-            <div className="userShowInfoTitle">฿ 20000</div>
-            <div
-              className="userShowInfoTitle"
-              style={{ cursor: "pointer" }}
-              onClick={() => setString("")}
-            >
-              Delivery Address
-            </div>
-            <div
-              className="userShowInfoTitle"
-              style={{ cursor: "pointer" }}
-              onClick={() => setString("Item Ordered")}
-            >
-              Item Ordered
-            </div>
-            <div className="userShowInfo"></div>
-          </div>
+          
         </div>
         <div className="userUpdate">
-          {string === "Item Ordered" ? (
-            <ItemOrdered userId={location?.state?.userId}/>
-          ) : (
             <DeliveryAddress addresses={user.userAddress} />
-          )}
         </div>
       </div>
+      <ItemOrdered userId={location?.state?.userId}/>
     </div>
   );
 }

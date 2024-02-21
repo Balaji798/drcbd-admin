@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Papa from 'papaparse';
 import {userRows } from "../../dummyData";
 import { CustomPagination, StyledDataGrid } from "../../data/StyledDataGrid ";
+import axios from "axios";
 
 const TopSpender = () => {
   function getDefaultDate() {
@@ -16,6 +17,14 @@ const TopSpender = () => {
     from: getDefaultDate(),
     to: getDefaultDate(),
   });
+
+  useEffect(()=>{
+    const gatData = async () => {
+      const {data} = await axios.get('https://drcbd-backend.onrender.com/orders/get_top_spender')
+      setData(data)
+    }
+    gatData()
+  },[])
   const filter = () => {
     const filteredData = data.filter((item) => {
       const itemDate = new Date(item.date);
@@ -25,11 +34,11 @@ const TopSpender = () => {
   };
   const columns = [
     { field: "id", headerName: "ID", width: 50 },
-    {field:"username",headerName:"User",flex:1},
+    {field:"userName",headerName:"User",flex:1},
     {field:"email",headerName:"Email",width:150,flex:1},
-    {field:"transaction",headerName:"Total Spend",flex:1}
+    {field:"totalPrice",headerName:"Total Spend",flex:1}
 ];
-  const rows = userRows.map((row, index) => ({
+  const rows = data.map((row, index) => ({
     ...row,
     id: index + 1,
   }));
