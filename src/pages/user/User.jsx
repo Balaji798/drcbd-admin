@@ -13,7 +13,7 @@ export default function User() {
     const getUser = async () => {
       try {
         const res = await axios.post(
-          "https://drcbd-backend.onrender.com/user/get-user-by-id",
+          "https://drcbd-backend-zgqu.onrender.com/user/get-user-by-id",
           { userId: location?.state?.userId }
         );
         if(res.data){

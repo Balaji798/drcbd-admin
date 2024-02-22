@@ -30,7 +30,7 @@ export default function UserList() {
 
   const getUsers = async () => {
     const res = await axios.get(
-      "https://drcbd-backend.onrender.com/user/get-users-list"
+      "https://drcbd-backend-zgqu.onrender.com/user/get-users-list"
     );
     setData(res.data);
     setOrders(res.data)

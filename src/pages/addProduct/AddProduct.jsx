@@ -77,7 +77,7 @@ const AddProduct = () => {
 
   const getAllProduct = async () => {
     const res = await axios.get(
-      "https://drcbd-backend.onrender.com/product/get_products"
+      "https://drcbd-backend-zgqu.onrender.com/product/get_products"
     );
     //console.log(res.data);
     setProduct(res.data[res.data.length - 1]);
@@ -116,7 +116,7 @@ const AddProduct = () => {
       formData.append("warningPrecaution", JSON.stringify(warningPrecaution));
       formData.append("productIcons", JSON.stringify(productIcons));
       const res = await axios.post(
-        "https://drcbd-backend.onrender.com/product/add_product",
+        "https://drcbd-backend-zgqu.onrender.com/product/add_product",
         formData
       );
     } catch (error) {

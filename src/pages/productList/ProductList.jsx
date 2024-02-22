@@ -15,13 +15,13 @@ export default function ProductList() {
   }, []);
 
   const getAllProduct = async () => {
-    const res = await axios.get("https://drcbd-backend.onrender.com/product/get_products");
+    const res = await axios.get("https://drcbd-backend-zgqu.onrender.com/product/get_products");
     console.log(res.data);
     setData(res.data);
   };
   const handleDelete = async(id) => {
     await ApiService.deleteProduct(id);
-    const res = await axios.get("https://drcbd-backend.onrender.com/product/get_products");
+    const res = await axios.get("https://drcbd-backend-zgqu.onrender.com/product/get_products");
     console.log(res.data);
     setData(res.data);
   };

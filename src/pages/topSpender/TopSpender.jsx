@@ -20,7 +20,7 @@ const TopSpender = () => {
 
   useEffect(()=>{
     const gatData = async () => {
-      const {data} = await axios.get('https://drcbd-backend.onrender.com/orders/get_top_spender')
+      const {data} = await axios.get('https://drcbd-backend-zgqu.onrender.com/orders/get_top_spender')
       setData(data)
     }
     gatData()

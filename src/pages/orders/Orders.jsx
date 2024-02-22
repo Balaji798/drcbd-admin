@@ -26,7 +26,7 @@ const Orders = () => {
     const getOrders = async () => {
       //const res = await ApiService.getOrders();
       const res = await axios.get(
-        "https://drcbd-backend.onrender.com/orders/get_all_orders"
+        "https://drcbd-backend-zgqu.onrender.com/orders/get_all_orders"
       );
       const data = res.data.filter((item) => {
         return item.status[item.status.length - 1].orderStatus !== "pending";

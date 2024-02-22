@@ -9,7 +9,7 @@ const ItemOrdered = ({ userId }) => {
   useEffect(() => {
     const getUserOrders = async () => {
       const res = await axios.post(
-        "https://drcbd-backend.onrender.com/orders/get_order",
+        "https://drcbd-backend-zgqu.onrender.com/orders/get_order",
         { userId: userId }
       );
       const data = res.data.filter((item) => {

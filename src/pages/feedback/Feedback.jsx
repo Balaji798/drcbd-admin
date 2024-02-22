@@ -7,7 +7,7 @@ const Feedback = () => {
   const [reviews, setReviews] = useState([]);
   useEffect(() => {
     const getReviews = async () => {
-      const res = await axios.get("https://drcbd-backend.onrender.com/review/get-reviews");
+      const res = await axios.get("https://drcbd-backend-zgqu.onrender.com/review/get-reviews");
       setReviews(res.data);
     };
 
@@ -40,7 +40,7 @@ const Feedback = () => {
             size={25}
             onClick={async () => {
               const res = await axios.delete(
-                `https://drcbd-backend.onrender.com/review/reviewDelete/${params.row._id}`
+                `https://drcbd-backend-zgqu.onrender.com/review/reviewDelete/${params.row._id}`
               );
               console.log(res.data);
               setReviews(res.data);
