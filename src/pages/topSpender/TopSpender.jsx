@@ -36,6 +36,7 @@ const TopSpender = () => {
     { field: "id", headerName: "ID", width: 50 },
     {field:"userName",headerName:"User",flex:1},
     {field:"email",headerName:"Email",width:150,flex:1},
+    {field:'contactNumber',headerName:'Contact Number',flex:1},
     {field:"totalPrice",headerName:"Total Spend",flex:1}
 ];
   const rows = data.map((row, index) => ({

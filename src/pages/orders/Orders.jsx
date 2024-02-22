@@ -28,7 +28,9 @@ const Orders = () => {
       const res = await axios.get(
         "https://drcbd-backend.onrender.com/orders/get_all_orders"
       );
-      const data = res.data.filter(item=> {return item.status[item.status.length-1].orderStatus!=='pending'})
+      const data = res.data.filter((item) => {
+        return item.status[item.status.length - 1].orderStatus !== "pending";
+      });
       setData(data);
       setOrders(data);
     };
@@ -39,18 +41,18 @@ const Orders = () => {
     const filteredData = totalOrders.filter((item) => {
       const itemDate = new Date(item.createdAt);
       itemDate.setHours(0, 0, 0, 0); // Set hours, minutes, seconds, and milliseconds to zero
-      
+
       const fromDate = new Date(date.from);
       fromDate.setHours(0, 0, 0, 0);
-      
+
       const toDate = new Date(date.to);
       toDate.setHours(0, 0, 0, 0);
-      
+
       return itemDate >= fromDate && itemDate <= toDate;
     });
     console.log(filteredData);
     setData(filteredData);
-};
+  };
 
   const filterByStatus = (event) => {
     event.preventDefault();
@@ -120,8 +122,11 @@ const Orders = () => {
       headerName: "Status",
       renderCell: (params) => {
         return (
-          <p>{params?.row?.status[params?.row?.status?.length-1].orderStatus}</p>
-        )}
+          <p>
+            {params?.row?.status[params?.row?.status?.length - 1].orderStatus}
+          </p>
+        );
+      },
     },
     {
       field: "orderTime",
@@ -129,8 +134,11 @@ const Orders = () => {
       width: 200,
       renderCell: (params) => {
         return (
-          <p>{params?.row?.status[params?.row?.status?.length-1].statusTime}</p>
-        )}
+          <p>
+            {params?.row?.status[params?.row?.status?.length - 1].statusTime}
+          </p>
+        );
+      },
     },
     {
       field: "createdAt",
@@ -163,9 +171,9 @@ const Orders = () => {
   }));
 
   const downloadCSV = () => {
-    const transformedData = data.map(order => {
+    const transformedData = data.map((order) => {
       const deliveryDetails = order.deliveryAddress;
-      const products = order.items.map(item => ({
+      const products = order.items.map((item) => ({
         _id: order._id,
         address: deliveryDetails?.address,
         city: deliveryDetails?.city,
@@ -174,13 +182,13 @@ const Orders = () => {
         postalCode: deliveryDetails?.postalCode,
         name: item.productId?.name,
         price: item.productId?.price,
-        orderStatus: order?.status[order?.status?.length-1]?.orderStatus,
-        userName:item.productId?.name
+        orderStatus: order?.status[order?.status?.length - 1]?.orderStatus,
+        userName: item.productId?.name,
       }));
-    
+
       return products;
     });
-    
+
     // Flatten the array of arrays
     const flattenedData = transformedData.flat();
     const csv = Papa.unparse(flattenedData);
@@ -190,7 +198,9 @@ const Orders = () => {
     // Create a temporary anchor element to initiate the download
     const a = document.createElement("a");
     a.href = url;
-    a.download = `order_${new Date().getDate()}-${new Date().getMonth()+1}-${new Date().getFullYear()}.csv`;
+    a.download = `order_${new Date().getDate()}-${
+      new Date().getMonth() + 1
+    }-${new Date().getFullYear()}.csv`;
     document.body.appendChild(a);
     a.click();
 
@@ -201,10 +211,6 @@ const Orders = () => {
   };
   return (
     <>
- { /*    <div>
-        <ToastContainer />
-  </div>*/}
-
       <div className="home">
         <Chart data={data} title="Orders Analytics" grid dataKey="Orders" />
       </div>
@@ -241,8 +247,8 @@ const Orders = () => {
               type="date"
               value={date.to}
               onChange={(e) => {
-                console.log(e.target.value)
-                setDate({ ...date, to: e.target.value })
+                console.log(e.target.value);
+                setDate({ ...date, to: e.target.value });
               }}
             />
           </div>
