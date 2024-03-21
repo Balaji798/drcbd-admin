@@ -50,7 +50,6 @@ const Orders = () => {
 
       return itemDate >= fromDate && itemDate <= toDate;
     });
-    console.log(filteredData);
     setData(filteredData);
   };
 
@@ -60,15 +59,13 @@ const Orders = () => {
       setData(totalOrders);
       return;
     }
-    const filterData = totalOrders.filter((item) => {
-      console.log(item.adminStatus, event, item.status === event);
-      if (
-        item.adminStatus === event.target.value ||
-        item.status === event.target.value
-      ) {
-        return item;
-      }
-    });
+    const filterData = totalOrders.filter(order => {
+      // Get the most recent status object
+  const latestStatus = order.status[order.status.length - 1];
+  // Check if the most recent status matches the target order status
+  return latestStatus.orderStatus === event.target.value;
+    })
+    console.log(filterData)
     setData(filterData);
   };
   const columns = [
@@ -189,13 +186,11 @@ const Orders = () => {
       return products;
     });
 
-    // Flatten the array of arrays
     const flattenedData = transformedData.flat();
     const csv = Papa.unparse(flattenedData);
     const blob = new Blob([csv], { type: "text/csv" });
     const url = URL.createObjectURL(blob);
 
-    // Create a temporary anchor element to initiate the download
     const a = document.createElement("a");
     a.href = url;
     a.download = `order_${new Date().getDate()}-${
@@ -203,8 +198,6 @@ const Orders = () => {
     }-${new Date().getFullYear()}.csv`;
     document.body.appendChild(a);
     a.click();
-
-    // Clean up by removing the temporary anchor
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
     //toast("Report Dow");
@@ -264,7 +257,7 @@ const Orders = () => {
           >
             <option value="all">All Orders</option>
             <option value="placed">Placed</option>
-            <option value="out delivery">Out For Delivery</option>
+            <option value="out for delivery">Out For Delivery</option>
             <option value="pending">Pending</option>
             <option value="delivered">Delivered</option>
             <option value="canceled">Canceled</option>

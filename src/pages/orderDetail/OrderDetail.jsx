@@ -1,12 +1,13 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "./orderDetail.css";
 
 const OrderDetail = () => {
   const { orderId } = useParams();
   const [orderData, setOrderData] = useState(null);
   const [orderStatus, setOrderStatus] = useState("");
+  const navigate = useNavigate()
 
   useEffect(() => {
     const getProductDetail = async () => {
@@ -15,7 +16,7 @@ const OrderDetail = () => {
       );
       console.log(res.data);
       setOrderData(res.data);
-      setOrderStatus(res.data.adminStatus);
+      setOrderStatus(res.data.status[res.data.status.length-1].orderStatus);
     };
     getProductDetail();
   }, []);
@@ -26,6 +27,9 @@ const OrderDetail = () => {
         `https://drcbd-backend-zgqu.onrender.com/orders/update_order_by_admin/${orderId}`,
         { status: orderStatus }
       );
+      if(res.data.status){
+        navigate('/orders')
+      }
     } catch (err) {
       console.log(err);
     }
@@ -202,7 +206,7 @@ const OrderDetail = () => {
               <input
                 type="checkbox"
                 checked={
-                  orderData?.status[1]?.orderStatus === "placed" ||
+                  orderData?.status[0]?.orderStatus === "placed" ||
                   orderData?.status[4]?.orderStatus === "delivered"
                 }
                 style={{
@@ -223,8 +227,6 @@ const OrderDetail = () => {
               <input
                 type="checkbox"
                 checked={
-                  orderData?.status[1]?.orderStatus === "out for delivery" ||
-                  orderData?.status[4]?.orderStatus === "delivered" ||
                   orderStatus === "out for delivery" || orderStatus==='delivered'
                 }
                 onChange={(e) => {
@@ -244,12 +246,11 @@ const OrderDetail = () => {
               <input
                 type="checkbox"
                 checked={
-                  orderData?.status[2]?.orderStatus === "delivered" ||
                   orderStatus === "delivered"
                 }
                 onChange={(e) => {
-                  if (orderData?.status[4]?.orderStatus === "delivered") {
-                    setOrderStatus("");
+                  if (orderStatus === "delivered") {
+                    setOrderStatus("placed");
                   } else setOrderStatus("delivered");
                 }}
                 style={{
@@ -269,9 +270,9 @@ const OrderDetail = () => {
             >
               <input
                 type="checkbox"
-                checked={orderData?.status[4]?.orderStatus === "cancelled"}
+                checked={orderStatus === "cancelled"}
                 onChange={(e) => {
-                  if (orderData?.status[4]?.orderStatus === "cancelled") {
+                  if (orderStatus === "cancelled") {
                     setOrderStatus("");
                   } else setOrderStatus("cancelled");
                 }}

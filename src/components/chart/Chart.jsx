@@ -30,17 +30,18 @@ const Chart = ({ title, data, dataKey, grid }) => {
   ];
   const userData = [];
   for (let i = 0; i <= 12; i++) {
-    let month = new Date(`${new Date().getFullYear()}-${i + 1}-01`).getMonth() + 1;
+    let month = new Date(`${new Date().getFullYear()}-${i + 1}-01`).getMonth();
     let monthData = data.filter(
-      (item) => 
-      new Date(item.createdAt).getMonth() + 1 === month
+      (item) => {
+       return new Date(item.createdAt).getMonth() + 1=== month
+      }
     );
     userData.push({
       name: mon[i],
       [dataKey]: monthData.length,
     });
   }
- // console.log(userData)
+ console.log(userData)
   return (
     <div className="chart">
       <h3 className="chartTitle">{title}</h3>

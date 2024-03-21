@@ -3,6 +3,7 @@ import Papa from 'papaparse';
 import {userRows } from "../../dummyData";
 import { CustomPagination, StyledDataGrid } from "../../data/StyledDataGrid ";
 import axios from "axios";
+import ApiService from "../../services/ApiService";
 
 const TopSpender = () => {
   function getDefaultDate() {
@@ -20,7 +21,7 @@ const TopSpender = () => {
 
   useEffect(()=>{
     const gatData = async () => {
-      const {data} = await axios.get('https://drcbd-backend-zgqu.onrender.com/orders/get_top_spender')
+      const {data} = await ApiService.getTopSpender()
       setData(data)
     }
     gatData()
