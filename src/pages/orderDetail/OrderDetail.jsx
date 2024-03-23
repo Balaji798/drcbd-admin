@@ -23,6 +23,11 @@ const OrderDetail = () => {
 
   const changeOrderStatus = async () => {
     try {
+      const data = orderData.status.filter(item=> item.orderStatus === orderStatus)
+      if(data.length ===1) {
+        alert('Status already updated, change the status first')
+        return
+      }
       const res = await axios.post(
         `https://drcbd-backend-zgqu.onrender.com/orders/update_order_by_admin/${orderId}`,
         { status: orderStatus }
