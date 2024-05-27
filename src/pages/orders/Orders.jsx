@@ -7,6 +7,8 @@ import { BsEye } from "react-icons/bs";
 // import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { DataGrid } from "@mui/x-data-grid";
+import ApiService from "../../services/ApiService";
 
 const Orders = () => {
   function getDefaultDate() {
@@ -24,10 +26,7 @@ const Orders = () => {
   });
   useEffect(() => {
     const getOrders = async () => {
-      //const res = await ApiService.getOrders();
-      const res = await axios.get(
-        "https://drcbd-backend-zgqu.onrender.com/orders/get_all_orders"
-      );
+      const res = await ApiService.getOrders();
       const data = res.data.filter((item) => {
         return item.status[item.status.length - 1].orderStatus !== "pending";
       });
@@ -59,13 +58,12 @@ const Orders = () => {
       setData(totalOrders);
       return;
     }
-    const filterData = totalOrders.filter(order => {
+    const filterData = totalOrders.filter((order) => {
       // Get the most recent status object
-  const latestStatus = order.status[order.status.length - 1];
-  // Check if the most recent status matches the target order status
-  return latestStatus.orderStatus === event.target.value;
-    })
-    console.log(filterData)
+      const latestStatus = order.status[order.status.length - 1];
+      // Check if the most recent status matches the target order status
+      return latestStatus.orderStatus === event.target.value;
+    });
     setData(filterData);
   };
   const columns = [
@@ -86,7 +84,7 @@ const Orders = () => {
     {
       field: "product name",
       headerName: "Product Name",
-      width: 300,
+      width: 250,
       renderCell: (params) => {
         return (
           <div style={{ width: "100%" }}>
@@ -240,7 +238,6 @@ const Orders = () => {
               type="date"
               value={date.to}
               onChange={(e) => {
-                console.log(e.target.value);
                 setDate({ ...date, to: e.target.value });
               }}
             />
@@ -297,7 +294,7 @@ const Orders = () => {
         </button>
       </div>
       <div style={{ height: 350, width: "97%", margin: 20 }}>
-        <StyledDataGrid
+        <DataGrid
           rows={rows}
           columns={columns}
           pageSize={10}
@@ -305,8 +302,13 @@ const Orders = () => {
           sx={{}}
           disableSelectionOnClick
           experimentalFeatures={{ newEditingApi: true }}
-          components={{
-            Pagination: CustomPagination,
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 10,
+                /* page: 0 // default value will be used if not passed */
+              },
+            },
           }}
         />
       </div>

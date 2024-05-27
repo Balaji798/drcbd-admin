@@ -2,17 +2,21 @@ import React, { useState, useEffect } from "react";
 import { MdDelete } from "react-icons/md";
 import { CustomPagination, StyledDataGrid } from "../../data/StyledDataGrid ";
 import axios from "axios";
+import { DataGrid } from "@mui/x-data-grid";
+import ApiService from "../../services/ApiService";
 
 const Feedback = () => {
   const [reviews, setReviews] = useState([]);
   useEffect(() => {
     const getReviews = async () => {
-      const res = await axios.get("https://drcbd-backend-zgqu.onrender.com/review/get-reviews");
+      const res = await axios.get(
+        "https://drcbd-backend-zgqu.onrender.com/review/get-reviews"
+      );
       setReviews(res.data);
     };
 
     getReviews();
-  }, []);
+  }, [reviews]);
   const columns = [
     { field: "id", headerName: "No.", width: 90 },
     { field: "userName", headerName: "User Name", width: 200 },
@@ -23,8 +27,16 @@ const Feedback = () => {
       width: 200,
       renderCell: (params) => {
         return (
-          <div style={{display:"flex",alignItems:"center"}}>
-            <img src={params?.row?.productId?.images[0]} style={{ width: 35 }} />
+          <div style={{ display: "flex", alignItems: "center" }}>
+            {params?.row?.productId?.images[0] ? (
+              <img
+                src={params?.row?.productId?.images[0]}
+                style={{ width: 35 }}
+                alt="/"
+              />
+            ) : (
+              ""
+            )}
             <p>{params?.row?.productId?.name}</p>
           </div>
         );
@@ -39,11 +51,12 @@ const Feedback = () => {
           <MdDelete
             size={25}
             onClick={async () => {
-              const res = await axios.delete(
-                `https://drcbd-backend-zgqu.onrender.com/review/reviewDelete/${params.row._id}`
-              );
-              console.log(res.data);
-              setReviews(res.data);
+              const data = reviews.filter((item) => {
+                return item !== params.row._id;
+              });
+              const res = await ApiService.deleteReviews(params.row._id);
+
+              setReviews(data);
             }}
           />
         );
@@ -58,7 +71,7 @@ const Feedback = () => {
     <div style={{ width: "97%", margin: 20 }}>
       <h1>Feedbacks</h1>
       <div style={{ height: 350, width: "100%" }}>
-        <StyledDataGrid
+        <DataGrid
           rows={rows}
           columns={columns}
           pageSize={10}
@@ -66,8 +79,13 @@ const Feedback = () => {
           sx={{}}
           disableSelectionOnClick
           experimentalFeatures={{ newEditingApi: true }}
-          components={{
-            Pagination: CustomPagination,
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 10,
+                /* page: 0 // default value will be used if not passed */
+              },
+            },
           }}
         />
       </div>

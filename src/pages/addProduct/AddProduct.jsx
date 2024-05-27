@@ -15,6 +15,7 @@ import Select from "@mui/material/Select";
 import Chip from "@mui/material/Chip";
 import "./addProduct.css";
 import { productIcon } from "../../dummyData";
+import { useNavigate } from "react-router-dom";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -46,6 +47,7 @@ function getStyles2(name, purposeName, theme) {
 }
 
 const AddProduct = () => {
+  const navigate = useNavigate();
   const [productIcons, setProductIcons] = useState([]);
   const theme = useTheme();
   const [productFor, setProductFor] = useState([""]);
@@ -67,7 +69,9 @@ const AddProduct = () => {
     warningPrecaution: "",
     productFor: "",
     videoLink: "",
-    contraindication:''
+    contraindication: "",
+    actualPrice: "",
+    discount: "",
   });
   const [file, setFile] = useState("");
 
@@ -79,7 +83,6 @@ const AddProduct = () => {
     const res = await axios.get(
       "https://drcbd-backend-zgqu.onrender.com/product/get_products"
     );
-    //console.log(res.data);
     setProduct(res.data[res.data.length - 1]);
   };
 
@@ -104,21 +107,33 @@ const AddProduct = () => {
       formData.append("quantity", product.quantity);
       formData.append("size", product.size);
       formData.append("price", product.price);
+      formData.append("actualPrice", product.actualPrice);
+      formData.append("discount", product.discount);
       formData.append("dosage", product.dosage);
       formData.append("ingredient", product.ingredient);
       formData.append("suitableFor", product.suitableFor);
       formData.append("use", product.use);
-      formData.append('contraindication', product.contraindication)
+      formData.append("contraindication", product.contraindication);
       formData.append(
         "storageContraindication",
         product.storageContraindication
       );
       formData.append("warningPrecaution", JSON.stringify(warningPrecaution));
       formData.append("productIcons", JSON.stringify(productIcons));
+      const config = {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          "Content-Type": "application/json", // Set the content type to JSON
+        },
+      };
       const res = await axios.post(
         "https://drcbd-backend-zgqu.onrender.com/product/add_product",
-        formData
+        formData,
+        config
       );
+      if (res.data === "success") {
+        navigate("/products");
+      }
     } catch (error) {
       console.log("Signup failed", error.message);
     }
@@ -200,7 +215,6 @@ const AddProduct = () => {
       setPurposeName(typeof value === "string" ? value.split(",") : value);
     }
   };
-  console.log(product.cbdByCategory);
   return (
     <div
       style={{
@@ -220,18 +234,25 @@ const AddProduct = () => {
       />
       <div style={{ display: "flex", alignItems: "center" }}>
         <div style={{ width: "50%" }}>
-          <div style={{ width: "100%", padding: "10px 0 5px" }}>
+          <div
+            style={{
+              width: "100%",
+              padding: "10px 0 5px",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
             <label>CBD BY CATEGORY</label>
             <input
               onChange={(e) => {
                 setProduct({
                   ...product,
-                  cbdByCategory: product.cbdByCategory,
+                  cbdByCategory: !product.cbdByCategory,
                 });
               }}
               type="checkbox"
               style={{ width: "1rem", height: "1rem", marginLeft: "1rem" }}
-              checked={product?.cbdByCategory || false}
+              checked={product?.cbdByCategory}
             />
           </div>
           <div>
@@ -245,7 +266,12 @@ const AddProduct = () => {
                 multiple
                 value={categoryName}
                 onChange={handleChange}
-                input={<OutlinedInput id="select-multiple-chip" label="CBD By Category's Category Name" />}
+                input={
+                  <OutlinedInput
+                    id="select-multiple-chip"
+                    label="CBD By Category's Category Name"
+                  />
+                }
                 renderValue={(options1) => (
                   <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
                     {options1.map((value) => (
@@ -269,7 +295,14 @@ const AddProduct = () => {
           </div>
         </div>
         <div style={{ width: "50%" }}>
-          <div style={{ width: "50%", display: "flex", padding: "15px 0 5px" }}>
+          <div
+            style={{
+              width: "50%",
+              display: "flex",
+              padding: "15px 0 5px",
+              alignItems: "center",
+            }}
+          >
             <label>CBD BY PURPOSE</label>
             <input
               onChange={() => {
@@ -277,7 +310,7 @@ const AddProduct = () => {
               }}
               type="checkbox"
               style={{ width: "1rem", height: "1rem", marginLeft: "1rem" }}
-              checked={product?.cbdByPurpose || false}
+              checked={product?.cbdByPurpose}
             />
           </div>
           <div style={{ width: "100%", padding: "10px 0 5px" }}>
@@ -293,7 +326,10 @@ const AddProduct = () => {
                   value={purposeName}
                   onChange={handleChange2}
                   input={
-                    <OutlinedInput id="select-multiple-chip" label="CBD By Purpose Category Name" />
+                    <OutlinedInput
+                      id="select-multiple-chip"
+                      label="CBD By Purpose Category Name"
+                    />
                   }
                   renderValue={(options2) => (
                     <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
@@ -378,11 +414,31 @@ const AddProduct = () => {
           />
           <TextField
             id="price"
-            label="Price In ฿"
+            label="Selling price In ฿"
             variant="outlined"
             onChange={(e) => setProduct({ ...product, price: e.target.value })}
             value={product?.price}
             style={{ width: "15rem" }}
+          />
+          <TextField
+            id="price"
+            label="Discount"
+            variant="outlined"
+            onChange={(e) =>
+              setProduct({ ...product, discount: e.target.value })
+            }
+            value={product?.discount}
+            style={{ width: "15rem", marginTop: "1rem" }}
+          />
+          <TextField
+            id="price"
+            label="Actual price In ฿"
+            variant="outlined"
+            onChange={(e) =>
+              setProduct({ ...product, actualPrice: e.target.value })
+            }
+            value={product?.price}
+            style={{ width: "15rem", marginTop: "1rem" }}
           />
         </div>
       </div>

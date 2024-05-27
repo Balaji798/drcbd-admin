@@ -4,6 +4,7 @@ import {userRows } from "../../dummyData";
 import { CustomPagination, StyledDataGrid } from "../../data/StyledDataGrid ";
 import axios from "axios";
 import ApiService from "../../services/ApiService";
+import { DataGrid } from "@mui/x-data-grid";
 
 const TopSpender = () => {
   function getDefaultDate() {
@@ -76,7 +77,7 @@ const TopSpender = () => {
       <h2>Top Spenders On CBD</h2>
       </div>
       <div style={{ height: 350, width: "97%", margin: 20 }}>
-        <StyledDataGrid
+      <DataGrid
           rows={rows}
           columns={columns}
           pageSize={10}
@@ -84,8 +85,13 @@ const TopSpender = () => {
           sx={{}}
           disableSelectionOnClick
           experimentalFeatures={{ newEditingApi: true }}
-          components={{
-            Pagination: CustomPagination,
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 10,
+                /* page: 0 // default value will be used if not passed */
+              },
+            },
           }}
         />
       </div>

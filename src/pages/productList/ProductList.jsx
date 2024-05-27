@@ -1,7 +1,6 @@
 import "./productList.css";
 import { MdDeleteOutline } from "react-icons/md";
-import { StyledDataGrid } from "../../data/StyledDataGrid ";
-import { CustomPagination } from "../../data/StyledDataGrid ";
+import { DataGrid } from '@mui/x-data-grid';
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -16,13 +15,11 @@ export default function ProductList() {
 
   const getAllProduct = async () => {
     const res = await axios.get("https://drcbd-backend-zgqu.onrender.com/product/get_products");
-    console.log(res.data);
     setData(res.data);
   };
   const handleDelete = async(id) => {
     await ApiService.deleteProduct(id);
     const res = await axios.get("https://drcbd-backend-zgqu.onrender.com/product/get_products");
-    console.log(res.data);
     setData(res.data);
   };
 
@@ -104,17 +101,8 @@ console.log(data);
         </Link>
       </div>
 
-      {/* <div className="productList">
-        <DataGrid
-          rows={data}
-          disableSelectionOnClick
-          columns={columns}
-          pageSize={8}
-          checkboxSelection
-        />
-      </div> */}
       <div style={{ height: 550, width: "100%" }}>
-        <StyledDataGrid
+        <DataGrid
           rows={rows}
           columns={columns}
           pageSize={10}
@@ -122,8 +110,13 @@ console.log(data);
           sx={{}}
           disableSelectionOnClick
           experimentalFeatures={{ newEditingApi: true }}
-          components={{
-            Pagination: CustomPagination,
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 10,
+                /* page: 0 // default value will be used if not passed */
+              },
+            },
           }}
         />
       </div>

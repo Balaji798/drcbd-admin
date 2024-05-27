@@ -28,9 +28,16 @@ const OrderDetail = () => {
         alert('Status already updated, change the status first')
         return
       }
+      const config = {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          "Content-Type": "application/json", // Set the content type to JSON
+        },
+      };
       const res = await axios.post(
         `https://drcbd-backend-zgqu.onrender.com/orders/update_order_by_admin/${orderId}`,
-        { status: orderStatus }
+        { status: orderStatus },
+        config
       );
       if(res.data.status){
         navigate('/orders')
@@ -40,7 +47,6 @@ const OrderDetail = () => {
     }
   };
 
-  console.log(orderStatus);
   return (
     <>
       <h2
@@ -91,16 +97,16 @@ const OrderDetail = () => {
               </div>
               <div style={{ padding: "0 1rem 1rem" }}>
                 <h3 style={{ paddingBottom: "0.5rem" }}>
-                  Product Name:- {item.productId.name}
+                  Product Name:- {item?.productId?.name}
                 </h3>
                 <h3>Product Id :-{item?.productId?._id}</h3>
                 <h3 style={{ padding: "1rem 0" }}>
-                  Total Quantity:- {item.quantity}
+                  Total Quantity:- {item?.quantity}
                 </h3>
                 <h3 style={{ paddingBottom: "1rem" }}>
-                  Actual Price:- ฿{item.productId.price}
+                  Actual Price:- ฿{item?.productId?.price}
                 </h3>
-                <h3>Total Price:- ฿{item.productId.price * item.quantity}</h3>
+                <h3>Total Price:- ฿{item?.productId?.price * item?.quantity}</h3>
               </div>
             </div>
           ))}
@@ -255,7 +261,7 @@ const OrderDetail = () => {
                 }
                 onChange={(e) => {
                   if (orderStatus === "delivered") {
-                    setOrderStatus("placed");
+                    setOrderStatus("out for delivery");
                   } else setOrderStatus("delivered");
                 }}
                 style={{

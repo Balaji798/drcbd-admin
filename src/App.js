@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/home/Home";
 import Topbar from "./components/topbar/Topbar";
 import SideBar from "./components/sidebar/Sidebar";
@@ -8,52 +8,40 @@ import ProductList from "./pages/productList/ProductList";
 import AddProduct from "./pages/addProduct/AddProduct";
 import EditProduct from "./pages/editProduct/EditProduct";
 import UserList from "./pages/userList/UserList";
-import CBDUniversity from "./pages/cbd-university/CBDUniversity";
-import Sales from "./pages/sales/Sales";
-//import Transaction from "./pages/transaction/Transaction";
-import Reports from "./pages/reports/Reports";
 import Feedback from "./pages/feedback/Feedback";
 import Orders from "./pages/orders/Orders";
-import AddBlog from "./pages/add-blog/AddBlog";
 import TopSpender from "./pages/topSpender/TopSpender";
 import User from "./pages/user/User";
+import AdminLogin from "./pages/adminLogin/AdminLogin";
+import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
+  const user = localStorage.getItem("adminToken");
+console.log(user)
   return (
     <Router>
-      {/* {user && <NavBar />}
-     {user && <SideBar />} */}
-      <Topbar />
-      <SideBar />
+      {user && <Topbar />}
+      {user && <SideBar />}
       <div
         style={{
-          // marginLeft:user && "14%",
-          // padding:user && "100px 0 0 20px",
-          // backgroundColor: "#f6f9fa",
-          marginLeft: "14%",
+          marginLeft: user ? "14%" : "0",
           padding: "50px 0 0 20px",
           backgroundColor: "#f6f9fa",
         }}
       >
         <Routes>
-          {/* {user && <Route path="/" element={<Dashboard />} />} */}
-          <Route path="/" element={<Home />} />
-          <Route path="/products" element={<ProductList />} />
-          <Route path="/add-product" element={<AddProduct />} />
-          <Route path={"/edit-product/:productId"} element={<EditProduct />} />
-          <Route path="/users" element={<UserList />} />
-          <Route path="/cbd-university" element={<CBDUniversity />} />
-          <Route path="/sales" element={<Sales />} />
-          {/* <Route path="/transaction" element={<Transaction />} />*/}
-          <Route path="/report" element={<Reports />} />
-          <Route path="/feedback" element={<Feedback />} />
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/add-blog" element={<AddBlog />} />
-          <Route path="/user-detail" element={<User />} />
-          <Route path="/order-detail/:orderId" element={<OrderDetail />} />
-          <Route path="/top_spender" exact element={<TopSpender />} />
-          {/* <Route path="/login" exact element={<Login />} />
-          <Route path="/" element={<Navigate replace to="/login" />} /> */}
+          <Route path="/login" element={<AdminLogin />} />
+          <Route path="*" element={<Navigate to={user ? "/" : "/login"} replace />} />
+          <Route path="/" element={<PrivateRoute element={Home} />} />
+          <Route path="/products" element={<PrivateRoute element={ProductList} />} />
+          <Route path="/add-product" element={<PrivateRoute element={AddProduct} />} />
+          <Route path="/edit-product/:productId" element={<PrivateRoute element={EditProduct} />} />
+          <Route path="/users" element={<PrivateRoute element={UserList} />} />
+          <Route path="/feedback" element={<PrivateRoute element={Feedback} />} />
+          <Route path="/orders" element={<PrivateRoute element={Orders} />} />
+          <Route path="/user-detail" element={<PrivateRoute element={User} />} />
+          <Route path="/order-detail/:orderId" element={<PrivateRoute element={OrderDetail} />} />
+          <Route path="/top_spender" element={<PrivateRoute element={TopSpender} />} />
         </Routes>
       </div>
     </Router>
@@ -61,6 +49,9 @@ function App() {
 }
 
 export default App;
+
+
+
 
 // import React, { useEffect, useState } from "react";
 

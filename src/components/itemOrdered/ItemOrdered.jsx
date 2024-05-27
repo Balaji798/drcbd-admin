@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { StyledDataGrid } from "../../data/StyledDataGrid ";
 import { CustomPagination } from "../../data/StyledDataGrid ";
 import axios from "axios";
+import { DataGrid } from "@mui/x-data-grid";
 
 const ItemOrdered = ({ userId }) => {
   const [orderData, setOrderData] = useState([]);
-  console.log(userId);
   useEffect(() => {
     const getUserOrders = async () => {
       const res = await axios.post(
@@ -34,7 +34,6 @@ const ItemOrdered = ({ userId }) => {
 
         return products;
       });
-      console.log(res.data);
       setOrderData(transformedData);
     };
     getUserOrders();
@@ -90,18 +89,23 @@ const ItemOrdered = ({ userId }) => {
     //   ))}
     // </div>
     <div style={{ height: 350, margin: 20 }}>
-      <StyledDataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={10}
-        rowsPerPageOptions={[10]}
-        sx={{}}
-        disableSelectionOnClick
-        experimentalFeatures={{ newEditingApi: true }}
-        components={{
-          Pagination: CustomPagination,
-        }}
-      />
+    <DataGrid
+    rows={rows}
+    columns={columns}
+    pageSize={10}
+    rowsPerPageOptions={[10]}
+    sx={{}}
+    disableSelectionOnClick
+    experimentalFeatures={{ newEditingApi: true }}
+    initialState={{
+      pagination: {
+        paginationModel: {
+          pageSize: 10,
+          /* page: 0 // default value will be used if not passed */
+        },
+      },
+    }}
+  />
     </div>
   );
 };

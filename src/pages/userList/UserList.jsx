@@ -8,6 +8,8 @@ import { GiSunkenEye } from "react-icons/gi";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Chart from "../../components/chart/Chart";
+import { DataGrid } from "@mui/x-data-grid";
+import ApiService from "../../services/ApiService";
 
 export default function UserList() {
   const navigate = useNavigate();
@@ -29,13 +31,12 @@ export default function UserList() {
   }, []);
 
   const getUsers = async () => {
-    const res = await axios.get(
-      "https://drcbd-backend-zgqu.onrender.com/user/get-users-list"
-    );
+    const user = localStorage.getItem("adminToken");
+    const res = await ApiService.getUserList()
+    // console.log(config);
     setData(res.data);
-    setOrders(res.data)
+    setOrders(res.data);
   };
-
 
   const filter = () => {
     const filteredData = totalOrders.filter((item) => {
@@ -66,9 +67,7 @@ export default function UserList() {
       headerName: "Status",
       width: 120,
       renderCell: (params) => {
-        return (
-         <p>{params.row.emailVerified?"Verified":"Not Verified"}</p>
-        );
+        return <p>{params.row.emailVerified ? "Verified" : "Not Verified"}</p>;
       },
     },
     {
@@ -123,7 +122,12 @@ export default function UserList() {
   return (
     <>
       <div className="home">
-        <Chart data={totalOrders} title="User Analytics" grid dataKey="Active User" />
+        <Chart
+          data={totalOrders}
+          title="User Analytics"
+          grid
+          dataKey="Active User"
+        />
       </div>
       <div
         style={{
@@ -178,21 +182,21 @@ export default function UserList() {
             Submit
           </button>
           <button
-          style={{
-            fontSize: 16,
-            marginTop: 16,
-            height: 28,
-            background: "#004d4a",
-            border: "none",
-            padding: "5px",
-            color: "#fff",
-            cursor: "pointer",
-            borderRadius: "5px",
-          }}
-          onClick={()=>setData(totalOrders)}
-        >
-          Reset
-        </button>
+            style={{
+              fontSize: 16,
+              marginTop: 16,
+              height: 28,
+              background: "#004d4a",
+              border: "none",
+              padding: "5px",
+              color: "#fff",
+              cursor: "pointer",
+              borderRadius: "5px",
+            }}
+            onClick={() => setData(totalOrders)}
+          >
+            Reset
+          </button>
         </div>
         <button
           style={{
@@ -212,7 +216,7 @@ export default function UserList() {
         </button>
       </div>
       <div style={{ height: 350, width: "90%", margin: 20 }}>
-        <StyledDataGrid
+        <DataGrid
           rows={rows}
           columns={columns}
           pageSize={10}
@@ -220,8 +224,13 @@ export default function UserList() {
           sx={{}}
           disableSelectionOnClick
           experimentalFeatures={{ newEditingApi: true }}
-          components={{
-            Pagination: CustomPagination,
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 10,
+                /* page: 0 // default value will be used if not passed */
+              },
+            },
           }}
         />
       </div>

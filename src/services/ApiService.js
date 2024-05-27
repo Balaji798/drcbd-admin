@@ -16,5 +16,11 @@ export default {
   },
   getTopSpender(){
     return Api().get('orders/get_top_spender')
+  },
+  getUserList(){
+    return Api().get("user/get-users-list")
+  },
+  deleteReviews(feedId){
+    return Api().delete(`review/reviewDelete/${feedId}`)
   }
 };
