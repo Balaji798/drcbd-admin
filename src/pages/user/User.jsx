@@ -27,7 +27,6 @@ export default function User() {
     getUser();
   }, []);
   
-console.log(location)
   return (
     <div className="user">
       <div className="userTitleContainer">
