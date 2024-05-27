@@ -47,7 +47,25 @@ function getStyles2(name, purposeName, theme) {
 }
 const EditProduct = () => {
   const theme = useTheme();
-  const [product, setProduct] = useState({});
+  const [product, setProduct] = useState({
+    name: "",
+    des: "",
+    fda: "",
+    size: "",
+    quantity: "",
+    price: "",
+    dosage: "",
+    ingredient: "",
+    suitableFor: "",
+    use: "",
+    storageContraindication: "",
+    warningPrecaution: "",
+    productFor: "",
+    videoLink: "",
+    contraindication: "",
+    actualPrice: "",
+    discount: "",
+  });
   const [productIcons, setProductIcons] = useState([]);
   const [toDeleteImg, setToDeleteImg] = useState([]);
   const [productFor, setProductFor] = useState([]);
@@ -65,7 +83,6 @@ const EditProduct = () => {
       "https://drcbd-backend-zgqu.onrender.com/product/product_by_id",
       { productId: productId }
     );
-    //console.log(res.data);
     setProductIcons(res.data.productIcons);
     setProductFor(res.data.productFor);
     setCategoryName(res.data.categoryName);
@@ -107,14 +124,20 @@ const EditProduct = () => {
         "storageContraindication",
         product.storageContraindication
       );
-      formData.append('contraindication', product.contraindication)
+      formData.append("contraindication", product.contraindication);
       formData.append("warningPrecaution", JSON.stringify(warningPrecaution));
       formData.append("productIcons", JSON.stringify(productIcons));
+      const config = {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          "Content-Type": "application/json", // Set the content type to JSON
+        },
+      };
       const res = await axios.post(
         "https://drcbd-backend-zgqu.onrender.com/product/edit_product",
-        formData
+        formData,
+        config
       );
-      console.log(typeof res.data);
       if (res.data === "success") {
         navigate("/products");
       }
@@ -210,17 +233,24 @@ const EditProduct = () => {
       }}
       className="edit_product"
     >
-        <TextField
-          id="productName"
-          label="Product Name"
-          variant="outlined"
-          value={product?.name}
-          onChange={(e) => setProduct({ ...product, name: e.target.value })}
-          style={{ width: "25rem" }}
-        />
+      <TextField
+        id="productName"
+        label="Product Name"
+        variant="outlined"
+        value={product?.name}
+        onChange={(e) => setProduct({ ...product, name: e.target.value })}
+        style={{ width: "25rem" }}
+      />
       <div style={{ display: "flex", alignItems: "center" }}>
         <div style={{ width: "50%" }}>
-          <div style={{ width: "100%", padding: "10px 0 5px" }}>
+          <div
+            style={{
+              width: "100%",
+              padding: "10px 0 5px",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
             <label>CBD BY CATEGORY</label>
             <input
               onChange={(e) => {
@@ -274,7 +304,7 @@ const EditProduct = () => {
           </div>
         </div>
         <div style={{ width: "50%" }}>
-          <div style={{ width: "50%", display: "flex" }}>
+          <div style={{ width: "50%", display: "flex", alignItems: "center" }}>
             <label>CBD BY PURPOSE</label>
             <input
               onChange={() => {
@@ -387,14 +417,7 @@ const EditProduct = () => {
           ))}
         </div>
       </div>
-        <TextField
-          id="fda"
-          label="FDA No."
-          variant="outlined"
-          value={product?.fda}
-          onChange={(e) => setProduct({ ...product, fda: e.target.value })}
-          style={{ width: "15rem" }}
-        />
+
       <div
         style={{
           display: "flex",
@@ -403,54 +426,60 @@ const EditProduct = () => {
           flexWrap: "wrap",
           justifyContent: "space-between",
           width: "55%",
-          marginTop:"1rem"
+          marginTop: "1rem",
         }}
       >
-        <div style={{ width: "45%" }}>
-          <TextField
-            id="fda"
-            type="number"
-            label="Quantity"
-            variant="outlined"
-            value={product?.quantity}
-            onChange={(e) =>
-              setProduct({ ...product, quantity: e.target.value })
-            }
-            style={{ width: "15rem" }}
-          />
-        </div>
-        <div style={{ width: "45%" }}>
-          <TextField
-            id="size"
-            label="Size"
-            variant="outlined"
-            onChange={(e) => setProduct({ ...product, size: e.target.value })}
-            value={product?.size}
-            style={{ width: "15rem" }}
-          />
-        </div>
-        <div style={{  marginTop: "1rem" }}>
-          <TextField
-            id="price"
-            label="Actual price In ฿"
-            variant="outlined"
-            onChange={(e) =>
-              setProduct({ ...product, actualPrice: e.target.value })
-            }
-            value={product?.actualPrice}
-            style={{ width: "15rem" }}
-          />
-        </div>
-        <div style={{ width: "45%", display: "flex", flexDirection: "column", marginTop: "1rem" }}>
+        <TextField
+          id="fda"
+          label="FDA No."
+          variant="outlined"
+          value={product?.fda}
+          onChange={(e) => setProduct({ ...product, fda: e.target.value })}
+          style={{ width: "15rem", marginTop: "1rem" }}
+        />
+        <TextField
+          id="fda"
+          type="number"
+          label="Quantity"
+          variant="outlined"
+          value={product?.quantity}
+          onChange={(e) => setProduct({ ...product, quantity: e.target.value })}
+          style={{ width: "15rem" }}
+        />
+        <TextField
+          id="size"
+          label="Size"
+          variant="outlined"
+          onChange={(e) => setProduct({ ...product, size: e.target.value })}
+          value={product?.size}
+          style={{ width: "15rem", marginTop: "1rem" }}
+        />
+        <TextField
+          id="price"
+          label="Actual price In ฿"
+          variant="outlined"
+          onChange={(e) =>
+            setProduct({ ...product, actualPrice: e.target.value })
+          }
+          value={product?.actualPrice}
+          style={{ width: "15rem", marginTop: "1rem" }}
+        />
+        <TextField
+          id="price"
+          label="Discount"
+          variant="outlined"
+          onChange={(e) => setProduct({ ...product, discount: e.target.value })}
+          value={product?.discount}
+          style={{ width: "15rem", marginTop: "1rem" }}
+        />
           <TextField
             id="price"
             label="Selling price In ฿"
             variant="outlined"
             onChange={(e) => setProduct({ ...product, price: e.target.value })}
             value={product?.price}
-            style={{ width: "15rem" }}
+            style={{ width: "15rem", marginTop: "1rem" }}
           />
-        </div>
       </div>
       <label>Video Link</label>
       <textarea
