@@ -241,9 +241,13 @@ const OrderDetail = () => {
                   orderStatus === "out for delivery" || orderStatus==='delivered'
                 }
                 onChange={(e) => {
-                  if (orderStatus === "out for delivery") {
-                    setOrderStatus("placed");
-                  } else setOrderStatus("out for delivery");
+                  if(orderStatus==="failed"){
+                    alert("Order status can't be changed because order is not placed");
+                    return
+                  }
+                    if (orderStatus === "out for delivery") {
+                      setOrderStatus("placed");
+                    } else setOrderStatus("out for delivery");
                 }}
                 style={{
                   width: "25px",
@@ -260,6 +264,10 @@ const OrderDetail = () => {
                   orderStatus === "delivered"
                 }
                 onChange={(e) => {
+                  if(orderStatus==="failed"){
+                    alert("Order status can't be changed because order is not placed");
+                    return
+                  }
                   if (orderStatus === "delivered") {
                     setOrderStatus("out for delivery");
                   } else setOrderStatus("delivered");
@@ -283,6 +291,10 @@ const OrderDetail = () => {
                 type="checkbox"
                 checked={orderStatus === "cancelled"}
                 onChange={(e) => {
+                  if(orderStatus==="failed"){
+                    alert("Order status can't be changed because order is not placed");
+                    return
+                  }
                   if (orderStatus === "cancelled") {
                     setOrderStatus("");
                   } else setOrderStatus("cancelled");
