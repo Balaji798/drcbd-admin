@@ -12,7 +12,7 @@ const AdminLogin = () => {
         event.target.elements.uname.value,
         event.target.elements.psw.value
       );
-      const res = await axios.post("http://localhost:8080/admin/login", {
+      const res = await axios.post("https://drcbd-backend-zgqu.onrender.com/admin/login", {
         email: event.target.elements.uname.value,
         password: event.target.elements.psw.value,
       });

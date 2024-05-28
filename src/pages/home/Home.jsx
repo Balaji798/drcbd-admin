@@ -32,7 +32,7 @@ export default function Home() {
         "https://drcbd-backend-zgqu.onrender.com/orders/get_all_orders"
       );
       const totalSales = await axios.get(
-        "http://localhost:8080/orders/get_total_sales"
+        "https://drcbd-backend-zgqu.onrender.com/orders/get_total_sales"
       );
       setTotalSales(totalSales?.data[0]?.totalSales);
       const sale = sales?.data?.slice(-8)
