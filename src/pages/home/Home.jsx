@@ -38,6 +38,10 @@ export default function Home() {
       const totalSales = await axios.get(
         "https://drcbd-backend-zgqu.onrender.com/orders/get_total_sales"
       );
+      console.log(totalSales.status)
+      if(totalSales.status === 403){
+        navigate("/login")
+       }
       setTotalSales(totalSales?.data[0]?.totalSales);
       const sale = sales?.data?.slice(-8)
       setMonthSales(sale);
