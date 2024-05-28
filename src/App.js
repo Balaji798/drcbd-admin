@@ -17,7 +17,6 @@ import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   const user = localStorage.getItem("adminToken");
-  console.log(user)
   return (
     <Router>
       {user && <Topbar />}
