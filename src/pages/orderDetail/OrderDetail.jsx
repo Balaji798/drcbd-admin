@@ -23,11 +23,11 @@ const OrderDetail = () => {
 
   const changeOrderStatus = async () => {
     try {
-      const data = orderData.status.filter(item=> item.orderStatus === orderStatus)
-      if(data.length ===1) {
-        alert('Status already updated, change the status first')
-        return
-      }
+      // const data = orderData.status.filter(item=> item.orderStatus === orderStatus)
+      // if(data.length ===1) {
+      //   alert('Status already updated, change the status first')
+      //   return
+      // }
       const config = {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
@@ -122,11 +122,6 @@ const OrderDetail = () => {
           <h3 style={{ paddingBottom: "1rem" }}>
             Order Date:- {orderData?.createdAt?.split("T")[0]} Order Time:-
             {orderData?.createdAt?.split("T")[1]?.split("Z")[0]}
-          </h3>
-          <h3>
-            Order Placed Date:- {orderData?.orderTime?.split("T")[0]} Order
-            Time:-
-            {orderData?.orderTime?.split("T")[1]?.split("Z")[0]}
           </h3>
 
           <h2
