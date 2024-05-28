@@ -10,9 +10,10 @@ import "./sidebar.css";
 //   BarChart,
 //   DynamicFeed,
 // } from "@material-ui/icons";
-import {Link} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
+  const navigate = useNavigate()
   const navData = [
     {
       title: "Dashboard",
@@ -25,8 +26,8 @@ const Sidebar = () => {
       link: "/users",
     },
     {
-      title:"Orders",
-      link:"/orders"
+      title: "Orders",
+      link: "/orders",
     },
     // {
     //   title: "Sales",
@@ -53,9 +54,9 @@ const Sidebar = () => {
     //   link: "/report",
     // },
     {
-      title:"Feedback",
+      title: "Feedback",
       //icon:<DynamicFeed className="sidebarIcon" />,
-      link:"/feedback"
+      link: "/feedback",
     },
   ];
   return (
@@ -72,6 +73,13 @@ const Sidebar = () => {
               </Link>
             ))}
           </ul>
+          <div className="link" style={{margin:"6rem 0 0 0.5rem"}} onClick={()=>{
+            localStorage.removeItem("adminToken")
+            navigate("/login")
+            window.location.reload()
+          }}>
+          <p className="sidebarListItem active">Logout</p>
+        </div>
         </div>
         {/* <div className="sidebarMenu">
           <h3 className="sidebarTitle">Notifications</h3>
@@ -86,6 +94,7 @@ const Sidebar = () => {
             </li>
           </ul>
         </div> */}
+
       </div>
     </div>
   );
