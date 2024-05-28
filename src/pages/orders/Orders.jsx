@@ -293,7 +293,7 @@ const Orders = () => {
           Download Report
         </button>
       </div>
-      <div style={{ height: 350, width: "97%", margin: 20 }}>
+      <div style={{ height: 500, width: "97%", margin: 20 }}>
         <DataGrid
           rows={rows}
           columns={columns}
