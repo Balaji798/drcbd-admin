@@ -1,7 +1,6 @@
 import "./widgetLg.css";
 
 export default function WidgetLg({ monthSales }) {
-  console.log(monthSales);
   const Button = ({ type }) => {
     return (
       <button

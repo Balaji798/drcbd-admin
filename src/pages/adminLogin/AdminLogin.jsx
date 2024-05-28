@@ -12,12 +12,12 @@ const AdminLogin = () => {
         event.target.elements.uname.value,
         event.target.elements.psw.value
       );
-      const res = await axios.post("https://drcbd-backend-zgqu.onrender.com/admin/login", {
+      const res = await axios.post("http://localhost:8080/admin/login", {
         email: event.target.elements.uname.value,
         password: event.target.elements.psw.value,
       });
-      console.log(res.status)
-      if (res.status === 204) {
+      console.log(res.data)
+      if (res.status === 200) {
         localStorage.setItem("adminToken", res.data.token);
         navigate("/")
         window.location.reload();

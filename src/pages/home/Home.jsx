@@ -19,7 +19,6 @@ export default function Home() {
         const objDate = new Date(item.createdAt);
         const objYear = objDate.getFullYear();
         const objMonth = objDate.getMonth();
-
         return (
           objYear === new Date().getFullYear() &&
           objMonth === new Date().getMonth()
@@ -37,7 +36,7 @@ export default function Home() {
     };
     getUsers();
   }, []);
-  console.log(monthSales)
+
   return (
     <div className="home">
       <FeaturedInfo
