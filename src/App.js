@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/home/Home";
 import Topbar from "./components/topbar/Topbar";
 import SideBar from "./components/sidebar/Sidebar";
@@ -14,7 +14,6 @@ import TopSpender from "./pages/topSpender/TopSpender";
 import User from "./pages/user/User";
 import AdminLogin from "./pages/adminLogin/AdminLogin";
 import PrivateRoute from "./components/PrivateRoute";
-import { useEffect } from "react";
 
 function App() {
   const user = localStorage.getItem("adminToken");

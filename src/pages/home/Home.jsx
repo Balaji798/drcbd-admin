@@ -15,7 +15,6 @@ export default function Home() {
   const [monthUser, setMontUser] = useState([]);
   const [monthSales, setMonthSales] = useState([]);
   const user = localStorage.getItem("adminToken");
-  console.log(user)
   useEffect(()=>{
    if(!user){
     navigate("/login")
