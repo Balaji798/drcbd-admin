@@ -5,6 +5,7 @@ import "./home.css";
 import WidgetSm from "../../components/widgetSm/WidgetSm";
 import WidgetLg from "../../components/widgetLg/WidgetLg";
 import axios from "axios";
+import ApiService from "../../services/ApiService";
 
 export default function Home() {
   const [totalUser, setTotalUser] = useState(0);
@@ -13,9 +14,7 @@ export default function Home() {
   const [monthSales, setMonthSales] = useState([]);
   useEffect(() => {
     const getUsers = async () => {
-      const res = await axios.get(
-        "https://drcbd-backend-zgqu.onrender.com/user/get-users-list"
-      );
+      const res = await ApiService.getUserList();
       const user = res.data.filter((item) => {
         const objDate = new Date(item.createdAt);
         const objYear = objDate.getFullYear();
@@ -28,9 +27,7 @@ export default function Home() {
       });
       setMontUser(user);
       setTotalUser(res?.data?.length);
-      const sales = await axios.get(
-        "https://drcbd-backend-zgqu.onrender.com/orders/get_all_orders"
-      );
+      const sales = await ApiService.getOrders();
       const totalSales = await axios.get(
         "https://drcbd-backend-zgqu.onrender.com/orders/get_total_sales"
       );
