@@ -6,12 +6,21 @@ import WidgetSm from "../../components/widgetSm/WidgetSm";
 import WidgetLg from "../../components/widgetLg/WidgetLg";
 import axios from "axios";
 import ApiService from "../../services/ApiService";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
+  const navigate = useNavigate()
   const [totalUser, setTotalUser] = useState(0);
   const [totalSales, setTotalSales] = useState(0);
   const [monthUser, setMontUser] = useState([]);
   const [monthSales, setMonthSales] = useState([]);
+  const user = localStorage.getItem("adminToken");
+  console.log(user)
+  useEffect(()=>{
+   if(!user){
+    navigate("/login")
+   }
+  },[])
   useEffect(() => {
     const getUsers = async () => {
       const res = await ApiService.getUserList();
