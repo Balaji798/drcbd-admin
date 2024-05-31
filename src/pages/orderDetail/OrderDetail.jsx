@@ -38,7 +38,7 @@ const OrderDetail = () => {
         },
       };
       const res = await axios.post(
-        `http://localhost:8080/orders/update_order_by_admin/${orderId}`,
+        `https://drcbd-backend-zgqu.onrender.com/orders/update_order_by_admin/${orderId}`,
         { status: orderStatus },
         config
       );
@@ -59,7 +59,7 @@ const OrderDetail = () => {
           textTransform: "uppercase",
         }}
       >
-        Order Id:-{orderData?._id}
+        Order Id:-{orderData?.orderId || "###"}
       </h2>
       <div
         style={{
@@ -102,7 +102,7 @@ const OrderDetail = () => {
                 <h3 style={{ paddingBottom: "0.5rem" }}>
                   Product Name:- {item?.productId?.name}
                 </h3>
-                <h3>Product Id :-{item?.productId?._id}</h3>
+                <h3>Product Id :-{item?.productId?.itemNo || "###"}</h3>
                 <h3 style={{ padding: "1rem 0" }}>
                   Total Quantity:- {item?.quantity}
                 </h3>
