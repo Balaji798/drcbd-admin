@@ -5,8 +5,10 @@ import { CustomPagination, StyledDataGrid } from "../../data/StyledDataGrid ";
 import axios from "axios";
 import ApiService from "../../services/ApiService";
 import { DataGrid } from "@mui/x-data-grid";
+import { useNavigate } from "react-router-dom";
 
 const TopSpender = () => {
+  const navigate = useNavigate()
   function getDefaultDate() {
     const currentDate = new Date();
     const day = String(currentDate.getDate()).padStart(2, "0");
@@ -22,8 +24,11 @@ const TopSpender = () => {
 
   useEffect(()=>{
     const gatData = async () => {
-      const {data} = await ApiService.getTopSpender()
-      setData(data)
+      const res = await ApiService.getTopSpender()
+      if(res.status === 401){
+        navigate("/login")
+      }
+      setData(res.data)
     }
     gatData()
   },[])

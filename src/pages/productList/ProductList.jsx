@@ -1,25 +1,32 @@
 import "./productList.css";
 import { MdDeleteOutline } from "react-icons/md";
 import { DataGrid } from '@mui/x-data-grid';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import ApiService from "../../services/ApiService";
 
 export default function ProductList() {
   const [data, setData] = useState([]);
-
+  const navigate = useNavigate()
   useEffect(() => {
     getAllProduct();
   }, []);
 
   const getAllProduct = async () => {
     const res = await axios.get("https://drcbd-backend-zgqu.onrender.com/product/get_products");
+    if(res.status === 401){
+      navigate("/login")
+    }
     setData(res.data);
   };
   const handleDelete = async(id) => {
-    await ApiService.deleteProduct(id);
+    const response = await ApiService.deleteProduct(id);
+    if(response.status === 401){
+      navigate("/login")
+    }
     const res = await axios.get("https://drcbd-backend-zgqu.onrender.com/product/get_products");
+  
     setData(res.data);
   };
 

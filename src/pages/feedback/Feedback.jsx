@@ -4,14 +4,19 @@ import { CustomPagination, StyledDataGrid } from "../../data/StyledDataGrid ";
 import axios from "axios";
 import { DataGrid } from "@mui/x-data-grid";
 import ApiService from "../../services/ApiService";
+import { useNavigate } from "react-router-dom";
 
 const Feedback = () => {
   const [reviews, setReviews] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
     const getReviews = async () => {
       const res = await axios.get(
         "https://drcbd-backend-zgqu.onrender.com/review/get-reviews"
       );
+      if (res.status === 401) {
+        navigate("/login");
+      }
       setReviews(res.data);
     };
 

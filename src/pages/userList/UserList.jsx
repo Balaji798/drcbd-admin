@@ -31,8 +31,10 @@ export default function UserList() {
   }, []);
 
   const getUsers = async () => {
-    const user = localStorage.getItem("adminToken");
     const res = await ApiService.getUserList()
+    if(res.status === 401){
+      navigate("/login")
+    }
     // console.log(config);
     setData(res.data);
     setOrders(res.data);

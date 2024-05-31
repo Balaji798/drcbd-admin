@@ -6,12 +6,13 @@ import { BsEye } from "react-icons/bs";
 // import { ToastContainer, toast } from "react-toastify";
 // import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import ApiService from "../../services/ApiService";
 import { convertToLocalTime } from "../../util/convertToLocalTime";
 
 const Orders = () => {
+  const navigate = useNavigate()
   function getDefaultDate() {
     const currentDate = new Date();
     const day = String(currentDate.getDate()).padStart(2, "0");
@@ -28,6 +29,10 @@ const Orders = () => {
   useEffect(() => {
     const getOrders = async () => {
       const res = await ApiService.getOrders();
+      if(res.status === 401){
+        navigate("/login")
+        return
+      }
       const data = res.data.filter((item) => {
         return item.status[item.status.length - 1].orderStatus !== "pending";
       });

@@ -23,6 +23,10 @@ export default function Home() {
   useEffect(() => {
     const getUsers = async () => {
       const res = await ApiService.getUserList();
+      if(res.status === 401){
+        navigate("/login")
+        return
+      }
       const user = res.data.filter((item) => {
         const objDate = new Date(item.createdAt);
         const objYear = objDate.getFullYear();
