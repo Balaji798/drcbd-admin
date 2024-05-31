@@ -9,6 +9,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { DataGrid } from "@mui/x-data-grid";
 import ApiService from "../../services/ApiService";
+import { convertToLocalTime } from "../../util/convertToLocalTime";
 
 const Orders = () => {
   function getDefaultDate() {
@@ -128,9 +129,12 @@ const Orders = () => {
       headerName: "Payment Time",
       width: 200,
       renderCell: (params) => {
+        const timeing = convertToLocalTime(params?.row?.status[params?.row?.status?.length - 1].statusTime)
+        const newTime = convertToLocalTime(new Date())
+        console.log(newTime)
         return (
           <p>
-            {params?.row?.status[params?.row?.status?.length - 1].statusTime}
+            {timeing}
           </p>
         );
       },

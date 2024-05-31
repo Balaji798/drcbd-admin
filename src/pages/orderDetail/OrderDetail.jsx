@@ -2,11 +2,13 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./orderDetail.css";
+import { convertToLocalTime } from "../../util/convertToLocalTime";
 
 const OrderDetail = () => {
   const { orderId } = useParams();
   const [orderData, setOrderData] = useState(null);
   const [orderStatus, setOrderStatus] = useState("");
+  const [orderTime,setOrderTime] = useState("")
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -17,6 +19,7 @@ const OrderDetail = () => {
       console.log(res.data);
       setOrderData(res.data);
       setOrderStatus(res.data.status[res.data.status.length-1].orderStatus);
+      setOrderTime(convertToLocalTime(res.data.status[res.data.status.length-1].statusTime))
     };
     getProductDetail();
   }, []);
@@ -35,7 +38,7 @@ const OrderDetail = () => {
         },
       };
       const res = await axios.post(
-        `https://drcbd-backend-zgqu.onrender.com/orders/update_order_by_admin/${orderId}`,
+        `http://localhost:8080/orders/update_order_by_admin/${orderId}`,
         { status: orderStatus },
         config
       );
@@ -120,10 +123,9 @@ const OrderDetail = () => {
             Status :- {orderStatus}
           </h3>
           <h3 style={{ paddingBottom: "1rem" }}>
-            Order Date:- {orderData?.createdAt?.split("T")[0]} Order Time:-
-            {orderData?.createdAt?.split("T")[1]?.split("Z")[0]}
+            Order Date:- {orderTime.split(" ")[0]} Order Time:-
+            {orderTime.split(" ")[1]}
           </h3>
-
           <h2
             style={{
               marginTop: "0.5rem",

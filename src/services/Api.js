@@ -2,7 +2,7 @@ import axios from "axios";
 
 export default () =>{
     return axios.create({
-        baseURL:"https://drcbd-backend-zgqu.onrender.com/",
+        baseURL:"http://localhost:8080/",
         //http://localhost:8080/
         headers:{
             "Content-Type":"aplication/json",

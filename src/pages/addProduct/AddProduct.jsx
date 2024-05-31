@@ -72,6 +72,7 @@ const AddProduct = () => {
     contraindication: "",
     actualPrice: "",
     discount: "",
+    itemNo:""
   });
   const [file, setFile] = useState("");
 
@@ -114,6 +115,7 @@ const AddProduct = () => {
       formData.append("suitableFor", product.suitableFor);
       formData.append("use", product.use);
       formData.append("contraindication", product.contraindication);
+      formData.append("itemNo",product.itemNo)
       formData.append(
         "storageContraindication",
         product.storageContraindication
@@ -391,7 +393,15 @@ const AddProduct = () => {
             variant="outlined"
             value={product?.fda}
             onChange={(e) => setProduct({ ...product, fda: e.target.value })}
-            style={{ width: "15rem" }}
+            style={{ width: "15rem",marginBottom:"0.7rem" }}
+          />
+          <TextField
+            id="itemNo"
+            label="Item No."
+            variant="outlined"
+            value={product?.itemNo}
+            onChange={(e) => setProduct({ ...product, itemNo: e.target.value })}
+            style={{ width: "15rem",marginTop:"-0.5rem" }}
           />
           <TextField
             id="fda"
@@ -402,7 +412,7 @@ const AddProduct = () => {
             onChange={(e) =>
               setProduct({ ...product, quantity: e.target.value })
             }
-            style={{ width: "15rem" }}
+            style={{ width: "15rem",marginBottom:"0.7rem" }}
           />
           <TextField
             id="size"
@@ -410,7 +420,7 @@ const AddProduct = () => {
             variant="outlined"
             onChange={(e) => setProduct({ ...product, size: e.target.value })}
             value={product?.size}
-            style={{ width: "15rem" }}
+            style={{ width: "15rem",marginBottom:"0.7rem" }}
           />
           <TextField
             id="price"
@@ -428,7 +438,7 @@ const AddProduct = () => {
               setProduct({ ...product, discount: e.target.value })
             }
             value={product?.discount}
-            style={{ width: "15rem", marginTop: "1rem" }}
+            style={{ width: "15rem", marginTop: "0rem" }}
           />
           <TextField
             id="price"

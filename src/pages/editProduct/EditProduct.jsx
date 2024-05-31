@@ -65,6 +65,7 @@ const EditProduct = () => {
     contraindication: "",
     actualPrice: "",
     discount: "",
+    itemNo:""
   });
   const [productIcons, setProductIcons] = useState([]);
   const [toDeleteImg, setToDeleteImg] = useState([]);
@@ -119,6 +120,7 @@ const EditProduct = () => {
       formData.append("use", product.use);
       formData.append("shippingFee", product.shippingFee);
       formData.append("actualPrice", product.actualPrice);
+      formData.append("itemNo",product.itemNo)
       formData.append("toDelete", JSON.stringify(toDeleteImg));
       formData.append(
         "storageContraindication",
@@ -211,7 +213,7 @@ const EditProduct = () => {
       target: { value },
     } = event;
     if (product.cbdByCategory === true) {
-      setCategoryName(typeof value === "string" ? value.split(",") : value);
+      setCategoryName(typeof value === "string" ? value.toLocaleLowerCase().split(",") : value.toLocaleLowerCase());
     }
   };
   const handleChange2 = (event) => {
@@ -219,10 +221,10 @@ const EditProduct = () => {
       target: { value },
     } = event;
     if (product.cbdByPurpose === true) {
-      setPurposeName(typeof value === "string" ? value.split(",") : value);
+      setPurposeName(typeof value === "string" ? value.toLocaleLowerCase().split(",") : value.toLocaleLowerCase());
     }
   };
-
+  console.log(product?.cbdByCategory)
   return (
     <div
       style={{
@@ -261,7 +263,7 @@ const EditProduct = () => {
               }}
               type="checkbox"
               style={{ width: "1rem", height: "1rem", marginLeft: "1rem" }}
-              value={product?.cbdByCategory || false}
+              checked={product?.cbdByCategory === true}
             />
           </div>
           <div>
@@ -312,7 +314,7 @@ const EditProduct = () => {
               }}
               type="checkbox"
               style={{ width: "1rem", height: "1rem", marginLeft: "1rem" }}
-              checked={product?.cbdByPurpose || false}
+              checked={product?.cbdByPurpose === true}
             />
           </div>
           <div>
@@ -438,7 +440,15 @@ const EditProduct = () => {
           style={{ width: "15rem", marginTop: "1rem" }}
         />
         <TextField
-          id="fda"
+          id="itemNo"
+          label="Item No."
+          variant="outlined"
+          value={product?.itemNo}
+          onChange={(e) => setProduct({ ...product, itemNo: e.target.value })}
+          style={{ width: "15rem", marginTop: "1rem" }}
+        />
+        <TextField
+          id="quantity"
           type="number"
           label="Quantity"
           variant="outlined"
