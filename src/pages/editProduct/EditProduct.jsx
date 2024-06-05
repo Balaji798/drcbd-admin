@@ -183,29 +183,49 @@ const EditProduct = () => {
   };
 
   const options1 = [
-    "CBD OIL",
-    "CBD SUPPLEMENTS",
-    "CBD FACE",
-    "CBD BODY",
-    "CBD BEVERAGE",
-    "AROMATHERAPY",
-    "CBD FOR PETS",
+    // "CBD OIL",
+    // "CBD SUPPLEMENTS",
+    // "CBD FACE",
+    // "CBD BODY",
+    // "CBD BEVERAGE",
+    // "AROMATHERAPY",
+    // "CBD FOR PETS",
+    "cbd oil",
+    "cbd supplements",
+    "cbd face",
+    "cbd body",
+    "cbd beverage",
+    "aromatherapy",
+    "cbd for pets",
   ];
 
   const options2 = [
-    "SLEEP",
-    "IMMUNITY",
-    "ENERGY",
-    "ANXIETY",
-    "MUSCLES & JOINTS",
-    "CANCER",
-    "PALLIATIVE CARE",
-    "SKINCARE",
-    "NCD’S (NON-COMMUNICABLE DISEASES)",
-    "AROMATHERAPY",
-    "HORMONES",
-    "OPIOID",
-    "WEIGHT MANAGEMENT",
+    // "SLEEP",
+    // "IMMUNITY",
+    // "ENERGY",
+    // "ANXIETY",
+    // "MUSCLES & JOINTS",
+    // "CANCER",
+    // "PALLIATIVE CARE",
+    // "SKINCARE",
+    // "NCD’S (NON-COMMUNICABLE DISEASES)",
+    // "AROMATHERAPY",
+    // "HORMONES",
+    // "OPIOID",
+    // "WEIGHT MANAGEMENT",
+    "sleep",
+    "immunity",
+    "energy",
+    "anxiety",
+    "muscles & joints",
+    "cancer",
+    "palliative care",
+    "skincare",
+    "ncd's (non-communicable diseases)",
+    "aromatherapy",
+    "hormones",
+    "opioid",
+    "weight management",
   ];
 
   const handleChange = (event) => {
@@ -213,7 +233,7 @@ const EditProduct = () => {
       target: { value },
     } = event;
     if (product.cbdByCategory === true) {
-      setCategoryName(typeof value === "string" ? value.toLocaleLowerCase().split(",") : value.toLocaleLowerCase());
+      setCategoryName(typeof value === "string" ? value.split(",") : value);
     }
   };
   const handleChange2 = (event) => {
@@ -221,7 +241,7 @@ const EditProduct = () => {
       target: { value },
     } = event;
     if (product.cbdByPurpose === true) {
-      setPurposeName(typeof value === "string" ? value.toLocaleLowerCase().split(",") : value.toLocaleLowerCase());
+      setPurposeName(typeof value === "string" ? value.split(",") : value);
     }
   };
   console.log(product?.cbdByCategory)

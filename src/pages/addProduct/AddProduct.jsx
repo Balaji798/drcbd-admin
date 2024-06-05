@@ -31,7 +31,7 @@ const MenuProps = {
 function getStyles(name, categoryName, theme) {
   return {
     fontWeight:
-      categoryName.indexOf(name) === -1
+      categoryName.indexOf(name.toLowerCase()) === -1
         ? theme.typography.fontWeightRegular
         : theme.typography.fontWeightMedium,
   };
@@ -40,7 +40,7 @@ function getStyles(name, categoryName, theme) {
 function getStyles2(name, purposeName, theme) {
   return {
     fontWeight:
-      purposeName.indexOf(name) === -1
+      purposeName.indexOf(name.toLowerCase()) === -1
         ? theme.typography.fontWeightRegular
         : theme.typography.fontWeightMedium,
   };
@@ -50,8 +50,8 @@ const AddProduct = () => {
   const navigate = useNavigate();
   const [productIcons, setProductIcons] = useState([]);
   const theme = useTheme();
-  const [productFor, setProductFor] = useState([""]);
-  const [warningPrecaution, setWarningPrecaution] = useState([""]);
+  const [productFor, setProductFor] = useState([]);
+  const [warningPrecaution, setWarningPrecaution] = useState([]);
   const [purposeName, setPurposeName] = useState([]);
   const [categoryName, setCategoryName] = useState([]);
   const [product, setProduct] = useState({
@@ -72,7 +72,7 @@ const AddProduct = () => {
     contraindication: "",
     actualPrice: "",
     discount: "",
-    itemNo:""
+    itemNo: "",
   });
   const [file, setFile] = useState("");
 
@@ -115,7 +115,7 @@ const AddProduct = () => {
       formData.append("suitableFor", product.suitableFor);
       formData.append("use", product.use);
       formData.append("contraindication", product.contraindication);
-      formData.append("itemNo",product.itemNo)
+      formData.append("itemNo", product.itemNo);
       formData.append(
         "storageContraindication",
         product.storageContraindication
@@ -176,29 +176,49 @@ const AddProduct = () => {
   };
 
   const options1 = [
-    "CBD OIL",
-    "CBD SUPPLEMENTS",
-    "CBD FACE",
-    "CBD BODY",
-    "CBD BEVERAGE",
-    "AROMATHERAPY",
-    "CBD FOR PETS",
+    // "CBD OIL",
+    // "CBD SUPPLEMENTS",
+    // "CBD FACE",
+    // "CBD BODY",
+    // "CBD BEVERAGE",
+    // "AROMATHERAPY",
+    // "CBD FOR PETS",
+    "cbd oil",
+    "cbd supplements",
+    "cbd face",
+    "cbd body",
+    "cbd beverage",
+    "aromatherapy",
+    "cbd for pets",
   ];
 
   const options2 = [
-    "SLEEP",
-    "IMMUNITY",
-    "ENERGY",
-    "ANXIETY",
-    "MUSCLES & JOINTS",
-    "CANCER",
-    "PALLIATIVE CARE",
-    "SKINCARE",
-    "NCD’S (NON-COMMUNICABLE DISEASES)",
-    "AROMATHERAPY",
-    "HORMONES",
-    "OPIOID",
-    "WEIGHT MANAGEMENT",
+    // "SLEEP",
+    // "IMMUNITY",
+    // "ENERGY",
+    // "ANXIETY",
+    // "MUSCLES & JOINTS",
+    // "CANCER",
+    // "PALLIATIVE CARE",
+    // "SKINCARE",
+    // "NCD’S (NON-COMMUNICABLE DISEASES)",
+    // "AROMATHERAPY",
+    // "HORMONES",
+    // "OPIOID",
+    // "WEIGHT MANAGEMENT",
+    "sleep",
+    "immunity",
+    "energy",
+    "anxiety",
+    "muscles & joints",
+    "cancer",
+    "palliative care",
+    "skincare",
+    "ncd's (non-communicable diseases)",
+    "aromatherapy",
+    "hormones",
+    "opioid",
+    "weight management",
   ];
 
   const handleChange = (event) => {
@@ -206,7 +226,9 @@ const AddProduct = () => {
       target: { value },
     } = event;
     if (product.cbdByCategory === true) {
-      setCategoryName(typeof value === "string" ? value.split(",") : value);
+      setCategoryName(
+        typeof value === "string" ? value.split(",") : value
+      );
     }
   };
   const handleChange2 = (event) => {
@@ -214,7 +236,9 @@ const AddProduct = () => {
       target: { value },
     } = event;
     if (product.cbdByPurpose === true) {
-      setPurposeName(typeof value === "string" ? value.split(",") : value);
+      setPurposeName(
+        typeof value === "string" ? value.split(",") : value
+      );
     }
   };
   return (
@@ -393,7 +417,7 @@ const AddProduct = () => {
             variant="outlined"
             value={product?.fda}
             onChange={(e) => setProduct({ ...product, fda: e.target.value })}
-            style={{ width: "15rem",marginBottom:"0.7rem" }}
+            style={{ width: "15rem", marginBottom: "0.7rem" }}
           />
           <TextField
             id="itemNo"
@@ -401,7 +425,7 @@ const AddProduct = () => {
             variant="outlined"
             value={product?.itemNo}
             onChange={(e) => setProduct({ ...product, itemNo: e.target.value })}
-            style={{ width: "15rem",marginTop:"-0.5rem" }}
+            style={{ width: "15rem", marginTop: "-0.5rem" }}
           />
           <TextField
             id="fda"
@@ -412,7 +436,7 @@ const AddProduct = () => {
             onChange={(e) =>
               setProduct({ ...product, quantity: e.target.value })
             }
-            style={{ width: "15rem",marginBottom:"0.7rem" }}
+            style={{ width: "15rem", marginBottom: "0.7rem" }}
           />
           <TextField
             id="size"
@@ -420,7 +444,7 @@ const AddProduct = () => {
             variant="outlined"
             onChange={(e) => setProduct({ ...product, size: e.target.value })}
             value={product?.size}
-            style={{ width: "15rem",marginBottom:"0.7rem" }}
+            style={{ width: "15rem", marginBottom: "0.7rem" }}
           />
           <TextField
             id="price"
